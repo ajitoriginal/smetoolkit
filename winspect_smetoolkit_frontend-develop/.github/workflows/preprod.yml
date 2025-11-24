@@ -1,0 +1,72 @@
+name: CD
+
+on:
+  push:
+    branches: [pre-prod]
+
+permissions:
+  actions: write
+  checks: write
+  contents: write
+  deployments: write
+  issues: write
+  packages: write
+  pull-requests: write
+  repository-projects: write
+  security-events: write
+  statuses: write
+
+jobs:
+  build-deploy:
+    name: build and deploy
+    runs-on: ubuntu-latest
+    environment: preprod
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 18
+
+      - run: npm install -g next
+
+      - run: npm -f install
+
+      # - run: npm ci
+
+      - run: npm run build
+
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - run: aws s3 sync ./out s3://preprod.smetoolkit.winspectdev.com
+
+      - name: Invalidate cloudfront
+        uses: chetan/invalidate-cloudfront-action@v2
+        env:
+          DISTRIBUTION: ${{ secrets.DISTRIBUTION }}
+          PATHS: "/index.html"
+          AWS_REGION: "us-east-1"
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  slackNotification:
+    name: Slack Notification
+    needs:
+      - build-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Slack Workflow Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: deployment-alerts
+          SLACK_TITLE: MESSAGE
+          SLACK_USERNAME: WIN-Services-Bot
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_FOOTER: preprod.smetookit.winspectapp.com [pre-prod]
+    #          SLACK_MESSAGE: ${{ github.event.head_commit.message }}

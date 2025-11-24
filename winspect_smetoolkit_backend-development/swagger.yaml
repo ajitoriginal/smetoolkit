@@ -1,0 +1,3066 @@
+openapi: 3.0.1
+info:
+  version: '0.4'
+  title: WINspect
+  description: WINspect Backend </br></br>
+  contact:
+    name: 'igill@winhomeoffice.com'
+# servers:
+#   - url: http://localhost:3000/api/v1
+#   - url: http://smeapi.winspectdev.com/api/v1
+paths:
+  /policies:
+    get:
+      tags:
+        - Policies
+      summary: List all policies
+      description: Retrieve all active policies
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WinPolicy'
+                  message:
+                    type: string
+                    example: "Policies Retrieved Successfully"
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+          post:
+      tags:
+        - Policies
+      summary: Create a new policy
+      description: Create a new WIN policy
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - url
+              properties:
+                name:
+                  type: string
+                  example: "Privacy Policy"
+                url:
+                  type: string
+                  example: "https://example.com/privacy-policy.pdf"
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  data:
+                    $ref: '#/components/schemas/WinPolicy'
+                  message:
+                    type: string
+                    example: "Policy Created Successfully"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /policies/{winPolicyId}:
+    get:
+      tags:
+        - Policies
+      summary: Get a specific policy
+      description: Retrieve a specific WIN policy by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: winPolicyId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  data:
+                    $ref: '#/components/schemas/WinPolicy'
+                  message:
+                    type: string
+                    example: "Policy Retrieved Successfully"
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+        put:
+      tags:
+        - Policies
+      summary: Update a policy
+      description: Update an existing WIN policy
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: winPolicyId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Updated Privacy Policy"
+                url:
+                  type: string
+                  example: "https://example.com/updated-privacy-policy.pdf"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  data:
+                    $ref: '#/components/schemas/WinPolicy'
+                  message:
+                    type: string
+                    example: "Policy Updated Successfully"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - Policies
+      summary: Delete a policy
+      description: Soft delete a WIN policy
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: winPolicyId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  data:
+                    type: object
+                    properties:
+                      deleted:
+                        type: boolean
+                        example: true
+                  message:
+                    type: string
+                    example: "Policy Deleted Successfully"
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /auth/login/manual:
+    post:
+      tags:
+        - Authentication
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  /template/remark/copy/defaults:
+    post:
+      tags:
+        - Template Remark
+      summary: Copy default remarks between offices
+      description: Copy default remarks from one office to another for specified templates. This allows offices to share and replicate default remark configurations across multiple templates.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/copy_template_default_remarks_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Template default remarks copied successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Successfully copied 15 default remarks from office 123 to office 456"
+                  data:
+                    type: object
+                    properties:
+                      copiedCount:
+                        type: integer
+                        example: 15
+                      skippedCount:
+                        type: integer
+                        example: 3
+                      totalFound:
+                        type: integer
+                        example: 18
+        '400':
+          description: Bad request - Invalid input parameters
+        '404':
+          description: Source or destination office not found
+        '500':
+          description: Internal server error
+  /auth/login/manual:
+    post:
+      tags:
+        - Auth
+      description: Manual Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/login_body'
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /auth/change-password:
+    put:
+      tags:
+        - Auth
+      description: Change Password
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/change_password_body'
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /service:
+    get:
+      tags:
+        - Service
+      description: Get All Services
+      parameters:
+        - name: pageIndex
+          in: query
+          description: Page Index
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+          example: 0
+        - name: pageSize
+          in: query
+          description: Page Size
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+          example: 6
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /office:
+    get:
+      tags:
+        - Office
+      description: Get All offices
+      parameters:
+        - name: masterTemplateId
+          in: query
+          description: Master template id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+          example: 0
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /office/remark:
+    get:
+      tags:
+        - Office
+      description: Get All offices for a remark
+      parameters:
+        - name: templateRemarkId
+          in: query
+          description: Template Remark id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+          example: 00ae0169-2f93-4a8c-b517-8d6b0244f5b1
+        - name: templateSubCategoryId
+          in: query
+          description: Template Remark id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+          example: 12add0e5-ff9b-4bfd-8983-5cd3d2213297
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+    put:
+      tags:
+        - Office
+      description: Map offices with default remark
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/map_office_remark_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+
+  /office/service-access:
+    post:
+      tags:
+        - Office
+      description: Provide services access to offices
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/add_office_service_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+    delete:
+      tags:
+        - Office
+      description: Remove services access from offices
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/remove_office_service_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+
+  /office/template-access:
+    post:
+      tags:
+        - Office
+      description: Provide templates access to offices
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/add_office_template_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+    delete:
+      tags:
+        - Office
+      description: Remove templates access from offices
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/remove_office_template_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /template/draft:
+    get:
+      tags:
+        - Template
+      description: Get All Templates
+      parameters:
+        - name: pageIndex
+          in: query
+          description: Page Index
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+          example: 0
+        - name: pageSize
+          in: query
+          description: Page Size
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+          example: 6
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+    post:
+      tags:
+        - Template
+      description: Create Draft Template
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_draft_template_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    put:
+      tags:
+        - Template
+      description: Edit Draft Template
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/edit_draft_template_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /template/master:
+    get:
+      tags:
+        - Template
+      description: Get All Master Templates
+      parameters:
+        - name: pageIndex
+          in: query
+          description: Page Index
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+          example: 0
+        - name: pageSize
+          in: query
+          description: Page Size
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+          example: 6
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+
+  /template/all:
+    get:
+      tags:
+        - Template
+      description: Get All Templates
+      parameters:
+        - name: masterTemplateId
+          in: query
+          description: Master Template Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: 1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+  /template/presigned-url:
+    get:
+      tags:
+        - Template
+      description: Get presigned url
+      parameters:
+        - name: masterTemplateId
+          in: query
+          description: Master Template Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 1
+        - name: type
+          in: query
+          description: Type
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum: [png, jpeg]
+            example: jpeg
+        - name: version
+          in: query
+          description: version
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            example: 1.1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+
+  /template/detail:
+    get:
+      tags:
+        - Template
+      description: Get Template Detail
+      parameters:
+        - name: templateId
+          in: query
+          description: template Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: 1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+  /template/info:
+    get:
+      tags:
+        - Template
+      description: Get Template Info
+      parameters:
+        - name: templateId
+          in: query
+          description: template Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: 1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+  /template/published:
+    get:
+      tags:
+        - Template
+      description: Get All Templates
+      parameters:
+        - name: masterTemplateId
+          in: query
+          description: Master Template Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: 100
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /template/publish:
+    post:
+      tags:
+        - Template
+      description: Publish a template
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/publish_template_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /template/republish:
+    post:
+      tags:
+        - Template
+      description: Publish a template
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/republish_template_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+
+  /template/es-status:
+    put:
+      tags:
+        - Template
+      description: Update elastic search status
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/update_es_template_body'
+      # security:
+      #   - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+  /template/categories:
+    get:
+      tags:
+        - Template Categories
+      description: Get All Categories for a Template
+      parameters:
+        - name: templateId
+          in: query
+          description: Template Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: 1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+    post:
+      tags:
+        - Template Categories
+      description: Add a category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/add_category_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+
+    put:
+      tags:
+        - Template Categories
+      description: Edit a category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/edit_category_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+
+    delete:
+      tags:
+        - Template Categories
+      description: Remove a category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/remove_category_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /template/categories/reorder:
+    put:
+      tags:
+        - Template Categories
+      description: Reorder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/reorder_category_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  /template/categories/reorder/all:
+    put:
+      tags:
+        - Template Categories
+      description: Reorder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/reorder_all_category_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /template/categories/presigned-url:
+    put:
+      tags:
+        - Template Categories
+      description: Get presigned url
+      parameters:
+        - name: templateId
+          in: query
+          description: Template Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 20a65720-5035-434b-b136-b542d033cd24
+        - name: type
+          in: query
+          description: Type
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum: [png, jpeg]
+            example: jpeg
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+  /template/categories/copy:
+    put:
+      tags:
+        - Template Categories
+      description: Reorder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/copy_category_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  /template/sub-categories:
+    get:
+      tags:
+        - Template SubCategories
+      description: Get All SubCategories for a Template
+      parameters:
+        - name: templateCategoryId
+          in: query
+          description: Template Category Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: 1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+    post:
+      tags:
+        - Template SubCategories
+      description: Add a subcategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/add_subcategory_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+
+    put:
+      tags:
+        - Template SubCategories
+      description: Edit a category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/edit_subcategory_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+
+    delete:
+      tags:
+        - Template SubCategories
+      description: Remove a subcategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/remove_subcategory_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /template/sub-categories/detail:
+    get:
+      tags:
+        - Template SubCategories
+      description: Get All abouts and remarks for a SubCategory
+      parameters:
+        - name: templateSubCategoryId
+          in: query
+          description: Template SubCategory Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: 7
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /template/sub-categories/reorder:
+    put:
+      tags:
+        - Template SubCategories
+      description: Reorder subcategories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/reorder_subcategory_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  /template/sub-categories/reorder/all:
+    put:
+      tags:
+        - Template SubCategories
+      description: Reorder all subcategories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/reorder_all_subcategory_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  /template/sub-categories/copy:
+    put:
+      tags:
+        - Template SubCategories
+      description: Reorder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/copy_subcategory_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /template/about:
+    get:
+      tags:
+        - Template About
+      description: Get All Abouts for a Subcategory
+      parameters:
+        - name: templateSubCategoryId
+          in: query
+          description: Template SubCategory Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: 4a214b09-7951-4b3a-bf60-92ff9a97b0d4
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+    post:
+      tags:
+        - Template About
+      description: Add an about
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/add_about_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+
+    put:
+      tags:
+        - Template About
+      description: Edit an about
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/edit_about_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+
+    delete:
+      tags:
+        - Template About
+      description: Remove an about
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/delete_about_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /template/about/all:
+    get:
+      tags:
+        - Template About
+      description: Get All Abouts for a template
+      parameters:
+        - name: templateId
+          in: query
+          description: Template Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: 1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /template/about/reorder:
+    put:
+      tags:
+        - Template About
+      description: Update Order Sequence of about
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/reorder_template_about_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+  /template/about/copy:
+    put:
+      tags:
+        - Template About
+      description: Reorder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/copy_about_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  /architectural-type:
+    post:
+      tags:
+        - Architectural Type
+      description: Add or remove architectural types
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/add_remove_architectural_type_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /template/about-value:
+    post:
+      tags:
+        - Template About Value
+      description: Add an about value
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/add_about_value_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+
+    put:
+      tags:
+        - Template About Value
+      description: Edit an about value
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/edit_about_value_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+
+    delete:
+      tags:
+        - Template About Value
+      description: Remove an about value
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/delete_about_value_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /template/about-value/reorder:
+    put:
+      tags:
+        - Template About Value
+      description: Update Order Sequence of about values
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/reorder_template_about_value_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+  /template/about-value/note:
+    post:
+      tags:
+        - Template About Value Note
+      description: Add an about value note
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/add_about_value_note_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+
+    delete:
+      tags:
+        - Template About Value Note
+      description: Remove an about value note
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/delete_about_value_note_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /template/remark:
+    get:
+      tags:
+        - Template Remark
+      description: Get All remark for a Subcategory
+      parameters:
+        - name: templateSubCategoryId
+          in: query
+          description: Template SubCategory Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: 4a214b09-7951-4b3a-bf60-92ff9a97b0d4
+        - name: pageIndex
+          in: query
+          description: Page Index
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+          example: 0
+        - name: pageSize
+          in: query
+          description: Page Size
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+          example: 6
+        - name: type
+          in: query
+          description: type
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: Functional,Issue,Informational,Limitation,Not Inspected
+        - name: remarkType
+          in: query
+          description: remarkType
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: Template,Custom
+        - name: sort
+          in: query
+          description: sort
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: Recently Added,Most Used,Least Used,Most Similar,Least Similar
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+
+    post:
+      tags:
+        - Template Remark
+      description: Add a remark
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/add_remark_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+
+    put:
+      tags:
+        - Template Remark
+      description: Edit a remark
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/edit_remark_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    #    servers:
+    #       - url: http://localhost:3001/api/v1
+    #        - url: http://smeapi.winspectdev.com/api/v1
+    #    servers:
+    #     - url: http://localhost:3001/api/v1
+    #    - url: http://smeapi.winspectdev.com/api/v1
+
+    delete:
+      tags:
+        - Template Remark
+      description: Remove a remark
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/delete_remark_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  #    servers:
+  #       - url: http://localhost:3001/api/v1
+  #        - url: http://smeapi.winspectdev.com/api/v1
+  #    servers:
+  #     - url: http://localhost:3001/api/v1
+  #    - url: http://smeapi.winspectdev.com/api/v1
+
+  /template/remark/hide:
+    put:
+      tags:
+        - Template Remark
+      description: Hide a remark
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/hide_remark_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  /template/remark/copy:
+    put:
+      tags:
+        - Template Remark
+      description: Reorder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/copy_remark_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  /template/remark/recover:
+    put:
+      tags:
+        - Template Remark
+      description: Recover a remark
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/recover_remark_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  /template/remark/favourite:
+    get:
+      tags:
+        - Template Remark
+      description: Get All favourite remark for a template
+      parameters:
+        - name: templateId
+          in: query
+          description: Template Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: 4a214b09-7951-4b3a-bf60-92ff9a97b0d4
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+  /template/remark/image/presigned-url:
+    get:
+      tags:
+        - Template Remark
+      description: Get presigned url
+      parameters:
+        - name: templateId
+          in: query
+          description: Template Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 1
+        - name: version
+          in: query
+          description: version
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            example: 1.1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+  /template/remark/image/path:
+    post:
+      tags:
+        - Template Remark
+      description: Store Image Path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/store_image_path_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  /template/remark/image/remove:
+    delete:
+      tags:
+        - Template Remark
+      description: Remove Image
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/remove_image_remark_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  /template/remark/custom:
+    post:
+      summary: Add a custom remark
+      description: Adds a custom remark for a specific office and template subcategory. Also creates a related remark for any draft subcategory if it exists, and sets frequency metadata.
+      tags:
+        - Template Remark
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - remark
+                - title
+                - frequency
+                - officeId
+                - type
+                - totalFrequency
+                - esTimestamp
+                - officeStatus
+                - templateSubCategoryId
+                - customRemarkAddedByUser
+              properties:
+                remark:
+                  type: string
+                  example: "Leaking faucet in bathroom."
+                title:
+                  type: string
+                  example: "Plumbing Issue"
+                frequency:
+                  type: integer
+                  example: 2
+                esTimestamp:
+                  type: string
+                  format: date-time
+                  example: "2025-04-16T09:30:00.000Z"
+                myRemark:
+                  type: boolean
+                  example: true
+                addToDefault:
+                  type: boolean
+                  example: false
+                totalFrequency:
+                  type: integer
+                  example: 3
+                officeId:
+                  type: string
+                  example: "office-456"
+                officeStatus:
+                  type: string
+                  enum:
+                    - Functional
+                    - Informational
+                    - Limitation
+                    - Not Inspected
+                    - Action Required
+                    - Repairs Recommended
+                    - Preventive Measure
+                    - Attention
+                  example: "Action Required"
+                type:
+                  type: string
+                  enum:
+                    - Functional
+                    - Not Present
+                    - Not Visible
+                    - Issue
+                    - Informational
+                    - Limitation
+                    - Not Inspected
+                  example: "Issue"
+                templateSubCategoryId:
+                  type: string
+                  example: "template-subcat-001"
+                customRemarkAddedByUser:
+                  type: string
+                  example: "user-123"
+                htmlRemark:
+                  type: string
+
+  /template/remark/custom/bulk:
+    post:
+      summary: Add multiple custom remarks in bulk
+      description: Adds a batch of custom remarks for a given office and template subcategory.
+      tags:
+        - Template Remark
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - officeId
+                - templateSubCategoryId
+                - customRemarkAddedByUser
+                - remarks
+              properties:
+                officeId:
+                  type: string
+                  example: "123e4567-e89b-12d3-a456-426614174000"
+                templateSubCategoryId:
+                  type: string
+                  example: "abc123-subcat-id"
+                customRemarkAddedByUser:
+                  type: string
+                  example: "user-789"
+                remarks:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: object
+                    required:
+                      - remark
+                      - title
+                      - frequency
+                      - esTimestamp
+                      - totalFrequency
+                      - officeStatus
+                      - type
+                    properties:
+                      remark:
+                        type: string
+                        example: "There is a crack in the foundation wall."
+                      title:
+                        type: string
+                        example: "Foundation Crack"
+                      frequency:
+                        type: integer
+                        example: 3
+                      esTimestamp:
+                        type: string
+                        format: date-time
+                        example: "2025-04-16T10:30:00.000Z"
+                      myRemark:
+                        type: boolean
+                        example: true
+                      addToDefault:
+                        type: boolean
+                        example: false
+                      totalFrequency:
+                        type: integer
+                        example: 5
+                      officeStatus:
+                        type: string
+                        enum:
+                          - Functional
+                          - Informational
+                          - Limitation
+                          - Not Inspected
+                          - Action Required
+                          - Repairs Recommended
+                          - Preventive Measure
+                          - Attention
+                        example: "Action Required"
+                      type:
+                        type: string
+                        enum:
+                          - Functional
+                          - Not Present
+                          - Not Visible
+                          - Issue
+                          - Informational
+                          - Limitation
+                          - Not Inspected
+                        example: "Issue"
+                      htmlRemark:
+                        type: string
+
+  /template/disclosure:
+    get:
+      tags:
+        - Template
+      description: Get All disclosures
+      parameters:
+        - name: templateId
+          in: query
+          description: Template Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: 1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+    post:
+      tags:
+        - Template
+      description: create a definition
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_disclosure_body'
+
+    put:
+      tags:
+        - Template
+      description: Edit a disclosure
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/edit_disclosure_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  /template/definition:
+    get:
+      tags:
+        - Template
+      description: Get All defintions
+      parameters:
+        - name: templateId
+          in: query
+          description: Template Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: 1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+    post:
+      tags:
+        - Template
+      description: create a definition
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_definition_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    put:
+      tags:
+        - Template
+      description: Edit a definition
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/edit_definition_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    delete:
+      tags:
+        - Template
+      description: Remove a definition
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/remove_definition_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  /template/location:
+    get:
+      tags:
+        - Template Location
+      description: Get All locations
+      parameters:
+        - name: templateId
+          in: query
+          description: Template Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: 1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+    post:
+      tags:
+        - Template Location
+      description: create a location
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_location_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    put:
+      tags:
+        - Template Location
+      description: Edit a location
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/edit_location_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    delete:
+      tags:
+        - Template Location
+      description: Remove a location
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/remove_location_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+  /template/sub-categories/reminders:
+    get:
+      tags:
+        - Template Reminders
+      description: Get All Reminders
+      parameters:
+        - name: templateSubCategoryId
+          in: query
+          description: templateSubCategory Id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: 1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+
+    post:
+      tags:
+        - Template Reminders
+      description: create a Reminder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_reminder_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    put:
+      tags:
+        - Template Reminders
+      description: Edit a Reminder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/edit_reminder_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+    delete:
+      tags:
+        - Template Reminders
+      description: Remove a Reminder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/remove_reminder_body'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Auto generated using Swagger Inspector
+
+components:
+  schemas:
+    Schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+
+    login_body:
+      type: object
+      required:
+        - email
+        - password
+        - companyKey
+      properties:
+        email:
+          type: string
+          example: admin@winhomeoffice.com
+        password:
+          type: string
+          example: Roove@123
+
+    create_draft_template_body:
+      type: object
+      required:
+        - masterTemplateId
+        - version
+        - iconImageKey
+      properties:
+        masterTemplateId:
+          type: string
+          example: 20a65720-5035-434b-b136-b542d033cd24
+        version:
+          type: integer
+          example: 1.1
+        preBuilttemplateId:
+          type: string
+          example: 1
+        iconImageKey:
+          type: string
+          example: templates/Standard Full Home Inspection/original/original_301757.png
+
+    edit_draft_template_body:
+      type: object
+      required:
+        - templateId
+      properties:
+        templateId:
+          type: string
+          example: 20a65720-5035-434b-b136-b542d033cd24
+        requireAttachment:
+          type: boolean
+          example: true
+        requireRemark:
+          type: boolean
+          example: false
+        hasToc:
+          type: boolean
+          example: false
+        hasLocation:
+          type: boolean
+          example: true
+        hasDefinition:
+          type: boolean
+          example: false
+        hasDisclosure:
+          type: boolean
+          example: true
+
+    add_category_body:
+      type: object
+      required:
+        - templateId
+        - iconImageKey
+        - name
+      properties:
+        templateId:
+          type: string
+          example: 20a65720-5035-434b-b136-b542d033cd24
+        iconImageKey:
+          type: string
+          example: iconImageKey
+        name:
+          type: string
+          example: Roof
+
+    edit_category_body:
+      type: object
+      required:
+        - templateId
+        - templateCategoryId
+      properties:
+        templateId:
+          type: string
+          example: 20a65720-5035-434b-b136-b542d033cd24
+        templateCategoryId:
+          type: string
+          example: d2982fd9-677f-4291-86bf-1cf594729bf9
+        iconImageKey:
+          type: string
+          example: iconImageKey
+        name:
+          type: string
+          example: Roof
+        print:
+          type: boolean
+          example: false
+    remove_category_body:
+      type: object
+      required:
+        - templateId
+        - templateCategoryId
+      properties:
+        templateId:
+          type: string
+          example: 20a65720-5035-434b-b136-b542d033cd24
+        templateCategoryId:
+          type: string
+          example: d2982fd9-677f-4291-86bf-1cf594729bf9
+
+    add_subcategory_body:
+      type: object
+      required:
+        - templateCategoryId
+        - name
+      properties:
+        templateCategoryId:
+          type: string
+          example: 213c5969-a691-437e-bae7-7e3f237de42e
+        name:
+          type: string
+          example: Roof General
+        isGeneral:
+          type: boolean
+          example: true
+
+    edit_subcategory_body:
+      type: object
+      required:
+        - templateSubCategoryId
+        - templateCategoryId
+      properties:
+        templateSubCategoryId:
+          type: string
+          example: 7cac8e4c-c4ce-4e99-abda-80759b5e3b78
+        templateCategoryId:
+          type: string
+          example: 213c5969-a691-437e-bae7-7e3f237de42e
+        name:
+          type: string
+          example: Roof cover
+        isGeneral:
+          type: boolean
+          example: false
+        print:
+          type: boolean
+          example: false
+
+    remove_subcategory_body:
+      type: object
+      required:
+        - templateSubCategoryId
+        - templateCategoryId
+      properties:
+        templateSubCategoryId:
+          type: string
+          example: 7cac8e4c-c4ce-4e99-abda-80759b5e3b78
+        templateCategoryId:
+          type: string
+          example: 213c5969-a691-437e-bae7-7e3f237de42e
+
+    reorder_category_body:
+      type: object
+      required:
+        - templateId
+        - templateCategoryId
+        - newOrderSequence
+      properties:
+        templateId:
+          type: string
+          example: 20a65720-5035-434b-b136-b542d033cd24
+        templateCategoryId:
+          type: string
+          example: 213c5969-a691-437e-bae7-7e3f237de42e
+        newOrderSequence:
+          type: integer
+          example: 2
+
+    reorder_subcategory_body:
+      type: object
+      required:
+        - templateCategoryId
+        - templateSubCategoryId
+        - newOrderSequence
+      properties:
+        templateCategoryId:
+          type: string
+          example: 213c5969-a691-437e-bae7-7e3f237de42e
+        templateSubCategoryId:
+          type: string
+          example: ce70729f-336c-4140-a22e-cf9d78daaa74
+        newOrderSequence:
+          type: integer
+          example: 2
+
+    add_about_body:
+      type: object
+      required:
+        - aboutTitle
+        - templateSubCategoryId
+      properties:
+        aboutTitle:
+          type: string
+          example: About Title
+        templateSubCategoryId:
+          type: string
+          example: 4a214b09-7951-4b3a-bf60-92ff9a97b0d4
+        isMultiSelect:
+          type: boolean
+          example: false
+
+    edit_about_body:
+      type: object
+      required:
+        - templateAboutId
+        - templateSubCategoryId
+      properties:
+        aboutTitle:
+          type: string
+          example: About Title
+        templateSubCategoryId:
+          type: string
+          example: 4a214b09-7951-4b3a-bf60-92ff9a97b0d4
+        templateAboutId:
+          type: string
+          example: 8c14ab76-a875-4166-96e7-dfa0101dcc1f
+        isMultiSelect:
+          type: boolean
+          example: true
+        hasLocation:
+          type: boolean
+          example: false
+
+    delete_about_body:
+      type: object
+      required:
+        - templateAboutId
+        - templateSubCategoryId
+      properties:
+        templateSubCategoryId:
+          type: string
+          example: 4a214b09-7951-4b3a-bf60-92ff9a97b0d4
+        templateAboutId:
+          type: string
+          example: 8c14ab76-a875-4166-96e7-dfa0101dcc1f
+
+    add_about_value_body:
+      type: object
+      required:
+        - templateAboutId
+        - templateId
+        - value
+      properties:
+        value:
+          type: string
+          example: About value
+        templateId:
+          type: string
+          example: 20a65720-5035-434b-b136-b542d033cd24
+        templateAboutId:
+          type: string
+          example: 8c14ab76-a875-4166-96e7-dfa0101dcc1f
+
+    edit_about_value_body:
+      type: object
+      required:
+        - templateAboutId
+        - templateAboutValueId
+        - templateId
+      properties:
+        value:
+          type: string
+          example: About value edited
+        templateAboutId:
+          type: string
+          example: ed72d01c-9225-4fa3-b701-7fd07b829708
+        templateAboutValueId:
+          type: string
+          example: 2bae6dce-4ab5-4bed-8a25-a851a3b574b3
+        templateId:
+          type: string
+          example: 20a65720-5035-434b-b136-b542d033cd24
+
+    delete_about_value_body:
+      type: object
+      required:
+        - templateAboutId
+        - templateAboutValueId
+        - templateId
+      properties:
+        templateAboutId:
+          type: string
+          example: ed72d01c-9225-4fa3-b701-7fd07b829708
+        templateAboutValueId:
+          type: string
+          example: 2bae6dce-4ab5-4bed-8a25-a851a3b574b3
+        templateId:
+          type: string
+          example: 20a65720-5035-434b-b136-b542d033cd24
+
+    add_about_value_note_body:
+      type: object
+      required:
+        - templateAboutValueId
+        - notes
+        - templateId
+      properties:
+        notes:
+          type: array
+          items:
+            type: object
+            properties:
+              note:
+                type: string
+                example: note 1
+              templateAboutValueNoteId:
+                type: string
+                example: 4fbed3ed-9a8f-46f9-bcf5-248b70006301
+        templateAboutValueId:
+          type: string
+          example: 2bae6dce-4ab5-4bed-8a25-a851a3b574b3
+        templateId:
+          type: string
+          example: 20a65720-5035-434b-b136-b542d033cd24
+
+    delete_about_value_note_body:
+      type: object
+      required:
+        - templateAboutValueNoteId
+        - templateAboutValueId
+        - templateId
+      properties:
+        templateAboutValueNoteId:
+          type: string
+          example: 4fbed3ed-9a8f-46f9-bcf5-248b70006301
+        templateAboutValueId:
+          type: string
+          example: 2bae6dce-4ab5-4bed-8a25-a851a3b574b3
+        templateId:
+          type: string
+          example: 20a65720-5035-434b-b136-b542d033cd24
+
+    add_remark_body:
+      type: object
+      required:
+        - remark
+        - title
+        - type
+        - templateSubCategoryId
+      properties:
+        templateSubCategoryId:
+          type: string
+          example: 4a214b09-7951-4b3a-bf60-92ff9a97b0d4
+        remark:
+          type: string
+          example: This is the remark
+        title:
+          type: string
+          example: Title goes here
+        type:
+          type: string
+          enum: ['Functional', 'Not Present', 'Not Visible', 'Issue', 'Informational', 'Limitation', 'Not Inspected']
+          example: Functional
+
+    edit_remark_body:
+      type: object
+      required:
+        - templateRemarkId
+        - templateSubCategoryId
+      properties:
+        templateSubCategoryId:
+          type: string
+          example: 4a214b09-7951-4b3a-bf60-92ff9a97b0d4
+        remark:
+          type: string
+          example: This is an edited remark
+        title:
+          type: string
+          example: Edited Title goes here
+        templateRemarkId:
+          type: string
+          example: fbadbfd5-e075-4c0c-b581-c7d19139b144
+        isFavourite:
+          type: boolean
+          example: false
+
+    delete_remark_body:
+      type: object
+      required:
+        - templateRemarkId
+        - templateSubCategoryId
+      properties:
+        templateSubCategoryId:
+          type: string
+          example: 4a214b09-7951-4b3a-bf60-92ff9a97b0d4
+        templateRemarkId:
+          type: string
+          example: fbadbfd5-e075-4c0c-b581-c7d19139b144
+
+    add_office_service_body:
+      type: object
+      required:
+        - officeIds
+        - serviceId
+      properties:
+        officeIds:
+          type: array
+          example:
+            - '1'
+            - 8c68cbde-7b45-4e4f-ac38-649ec3260e29
+        serviceId:
+          type: string
+          example: 100
+
+    remove_office_service_body:
+      type: object
+      required:
+        - officeIds
+        - serviceId
+      properties:
+        officeIds:
+          type: array
+          example:
+            - '1'
+            - 8c68cbde-7b45-4e4f-ac38-649ec3260e29
+        serviceId:
+          type: string
+          example: 100
+
+    add_office_template_body:
+      type: object
+      required:
+        - officeIds
+        - masterTemplateId
+      properties:
+        officeIds:
+          type: array
+          example:
+            - '1'
+            - 8c68cbde-7b45-4e4f-ac38-649ec3260e29
+        masterTemplateId:
+          type: string
+          example: 100
+
+    remove_office_template_body:
+      type: object
+      required:
+        - officeIds
+        - masterTemplateId
+      properties:
+        officeIds:
+          type: array
+          example:
+            - '1'
+            - 8c68cbde-7b45-4e4f-ac38-649ec3260e29
+        masterTemplateId:
+          type: string
+          example: 100
+
+    add_remove_architectural_type_body:
+      type: object
+      required:
+        - templateAboutIds
+        - templateId
+      properties:
+        templateAboutIds:
+          type: array
+          example:
+            - ed72d01c-9225-4fa3-b701-7fd07b829708
+            - 7d5f4f02-a181-434e-93da-7f95b42b8a37
+        templateId:
+          type: string
+          example: 1
+
+    publish_template_body:
+      type: object
+      required:
+        - templateId
+      properties:
+        templateId:
+          type: string
+          example: 1
+
+    republish_template_body:
+      type: object
+      required:
+        - templateId
+      properties:
+        templateId:
+          type: string
+          example: 1
+
+    change_password_body:
+      type: object
+      required:
+        - newPassword
+        - currentPassword
+      properties:
+        newPassword:
+          type: string
+          example: 12345678Ab
+        currentPassword:
+          type: string
+          example: 12345678Ac
+
+    reorder_template_about_body:
+      type: object
+      required:
+        - aboutData
+        - templateSubCategoryId
+      properties:
+        templateSubCategoryId:
+          type: string
+          example: 11
+        aboutData:
+          type: array
+          items:
+            type: object
+            properties:
+              templateAboutId:
+                type: string
+                example: 4732c24-28f8-404c-b73f-07a73040b052
+              orderNumber:
+                type: integer
+                example: 1
+
+    reorder_all_category_body:
+      type: object
+      required:
+        - categoryData
+        - templateId
+      properties:
+        templateId:
+          type: string
+          example: 11
+        categoryData:
+          type: array
+          items:
+            type: object
+            properties:
+              templateCategoryId:
+                type: string
+                example: 4732c24-28f8-404c-b73f-07a73040b052
+              orderNumber:
+                type: integer
+                example: 1
+
+    reorder_all_subcategory_body:
+      type: object
+      required:
+        - subCategoryData
+        - templateCategoryId
+      properties:
+        templateCategoryId:
+          type: string
+          example: 11
+        subCategoryData:
+          type: array
+          items:
+            type: object
+            properties:
+              templateSubCategoryId:
+                type: string
+                example: 4732c24-28f8-404c-b73f-07a73040b052
+              orderNumber:
+                type: integer
+                example: 1
+
+    reorder_template_about_value_body:
+      type: object
+      required:
+        - aboutValueData
+        - templateAboutId
+      properties:
+        templateAboutId:
+          type: string
+          example: 11
+        aboutValueData:
+          type: array
+          items:
+            type: object
+            properties:
+              templateAboutValueId:
+                type: string
+                example: 4732c24-28f8-404c-b73f-07a73040b052
+              orderNumber:
+                type: integer
+                example: 1
+
+    edit_disclosure_body:
+      type: object
+      required:
+        - templateDisclosureId
+      properties:
+        templateDisclosureId:
+          type: string
+          example: dd5fad5b-0cbc-46b2-961e-f43d21373f6c
+        show:
+          type: boolean
+          example: false
+        title:
+          type: string
+          example: Not a warranty
+        description:
+          type: string
+          example: test description
+
+    create_definition_body:
+      type: object
+      required:
+        - templateId
+        - title
+      properties:
+        templateId:
+          type: string
+          example: dd5fad5b-0cbc-46b2-961e-f43d21373f6c
+        title:
+          type: string
+          example: Action required
+        description:
+          type: string
+          example: test description
+
+    create_disclosure_body:
+      type: object
+      required:
+        - templateId
+        - description
+      properties:
+        templateId:
+          type: string
+          example: dd5fad5b-0cbc-46b2-961e-f43d21373f6c
+        description:
+          type: string
+          example: test description
+
+    edit_definition_body:
+      type: object
+      required:
+        - templateDefinitionId
+      properties:
+        templateDefinitionId:
+          type: string
+          example: dd5fad5b-0cbc-46b2-961e-f43d21373f6c
+        title:
+          type: string
+          example: Action required
+        description:
+          type: string
+          example: test description
+
+    remove_definition_body:
+      type: object
+      required:
+        - templateDefinitionId
+      properties:
+        templateDefinitionId:
+          type: string
+          example: dd5fad5b-0cbc-46b2-961e-f43d21373f6c
+
+    create_location_body:
+      type: object
+      required:
+        - templateId
+        - location
+      properties:
+        templateId:
+          type: string
+          example: dd5fad5b-0cbc-46b2-961e-f43d21373f6c
+        location:
+          type: string
+          example: Bedroom
+
+    edit_location_body:
+      type: object
+      required:
+        - templateLocationId
+      properties:
+        templateLocationId:
+          type: string
+          example: dd5fad5b-0cbc-46b2-961e-f43d21373f6c
+        location:
+          type: string
+          example: Garage
+
+    remove_location_body:
+      type: object
+      required:
+        - templateLocationId
+      properties:
+        templateLocationId:
+          type: string
+          example: dd5fad5b-0cbc-46b2-961e-f43d21373f6c
+
+    create_reminder_body:
+      type: object
+      required:
+        - templateSubCategoryId
+        - description
+      properties:
+        templateSubCategoryId:
+          type: string
+          example: dd5fad5b-0cbc-46b2-961e-f43d21373f6c
+        description:
+          type: string
+          example: Bedroom
+
+    edit_reminder_body:
+      type: object
+      required:
+        - templateSubCategoryReminderId
+        - templateSubCategoryId
+      properties:
+        templateSubCategoryId:
+          type: string
+          example: dd5fad5b-0cbc-46b2-961e-f43d21373f6c
+        templateSubCategoryReminderId:
+          type: string
+          example: dd5fad5b-0cbc-46b2-961e-f43d21373f6c
+        description:
+          type: string
+          example: Bedroom
+
+    remove_reminder_body:
+      type: object
+      required:
+        - templateSubCategoryReminderId
+        - templateSubCategoryId
+      properties:
+        templateSubCategoryId:
+          type: string
+          example: dd5fad5b-0cbc-46b2-961e-f43d21373f6c
+        templateSubCategoryReminderId:
+          type: string
+          example: dd5fad5b-0cbc-46b2-961e-f43d21373f6c
+
+    update_es_template_body:
+      type: object
+      required:
+        - templateId
+        - availableOnES
+      properties:
+        templateId:
+          type: string
+          example: dd5fad5b-0cbc-46b2-961e-f43d21373f6c
+        availableOnES:
+          type: boolean
+          example: false
+
+          
+    hide_remark_body:
+      type: object
+      required:
+        - remarkIds
+        - templateSubCategoryId
+      properties:
+        remarkIds:
+          type: array
+          example:
+            - ed72d01c-9225-4fa3-b701-7fd07b829708
+            - 7d5f4f02-a181-434e-93da-7f95b42b8a37
+        templateSubCategoryId:
+          type: string
+          example: 1
+
+    recover_remark_body:
+      type: object
+      required:
+        - remarkIds
+        - templateSubCategoryId
+      properties:
+        remarkIds:
+          type: array
+          example:
+            - ed72d01c-9225-4fa3-b701-7fd07b829708
+            - 7d5f4f02-a181-434e-93da-7f95b42b8a37
+        templateSubCategoryId:
+          type: string
+          example: 1
+
+          
+    copy_category_body:
+      type: object
+      required:
+        - copyFromPubTemplateId
+        - copyFromCategoryIds
+        - copyToDraftTemplateId
+      properties:
+        copyFromPubTemplateId:
+          type: string
+          example: 1
+        copyFromCategoryIds:
+          type: array
+          example:
+            - ed72d01c-9225-4fa3-b701-7fd07b829708
+            - 7d5f4f02-a181-434e-93da-7f95b42b8a37
+        copyToDraftTemplateId:
+          type: string
+          example: 1
+
+    copy_subcategory_body:
+      type: object
+      required:
+        - copyFromPubTemplateId
+        - copyFromSubCategoryIds
+        - copyToDraftCategoryId
+      properties:
+        copyFromPubTemplateId:
+          type: string
+          example: 1
+        copyFromSubCategoryIds:
+          type: array
+          example:
+            - ed72d01c-9225-4fa3-b701-7fd07b829708
+            - 7d5f4f02-a181-434e-93da-7f95b42b8a37
+        copyToDraftCategoryId:
+          type: string
+          example: 1
+
+    copy_about_body:
+      type: object
+      required:
+        - copyFromPubTemplateId
+        - copyFromAboutIds
+        - copyToDraftSubCategoryId
+      properties:
+        copyFromPubTemplateId:
+          type: string
+          example: 1
+        copyFromAboutIds:
+          type: array
+          example:
+            - ed72d01c-9225-4fa3-b701-7fd07b829708
+            - 7d5f4f02-a181-434e-93da-7f95b42b8a37
+        copyToDraftSubCategoryId:
+          type: string
+          example: 1
+
+    copy_remark_body:
+      type: object
+      required:
+        - copyFromPubTemplateId
+        - copyFromRemarkIds
+        - copyToDraftSubCategoryId
+      properties:
+        copyFromPubTemplateId:
+          type: string
+          example: 1
+        copyFromRemarkIds:
+          type: array
+          example:
+            - ed72d01c-9225-4fa3-b701-7fd07b829708
+            - 7d5f4f02-a181-434e-93da-7f95b42b8a37
+        copyToDraftSubCategoryId:
+          type: string
+          example: 1
+
+    store_image_path_body:
+      type: object
+      required:
+        - originalImageKey
+        - orderNumber
+        - templateRemarkId
+      properties:
+        originalImageKey:
+          type: string
+          example: templates/Master_Full_Home_Inspection_Template/13.90/categories/original/original_3540845.jpg
+        templateRemarkId:
+          type: string
+          example: 7d5f4f02-a181-434e-93da-7f95b42b8a37
+        orderNumber:
+          type: integer
+          example: 1 
+        uploadStatus:
+          type: string
+          enum: ['uploaded', 'pending', 'failed']
+          example: uploaded
+
+    remove_image_remark_body:
+      type: object
+      required:
+        - templateRemarkImageId
+      properties:
+        templateRemarkImageId:
+          type: string
+          example: 7d5f4f02-a181-434e-93da-7f95b42b8a37
+
+    map_office_remark_body:
+      type: object
+      required:
+        - officeIds
+        - templateRemarkId
+        - templateSubCategoryId
+      properties:
+        officeIds:
+          type: array
+          example:
+            - '1'
+            - 8c68cbde-7b45-4e4f-ac38-649ec3260e29
+        templateRemarkId:
+          type: string
+          example: 18c68cbde-7b45-4e4f-ac38-649ec3260e2900
+        templateSubCategoryId:
+          type: string
+          example: 7d5f4f02-a181-434e-93da-7f95b42b8a37
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

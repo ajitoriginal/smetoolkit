@@ -1,0 +1,54 @@
+@import "../../scss/variable";
+
+.sideBar {
+  width: 132px;
+  padding: 70px 12px 50px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  flex-direction: column;
+  height: 100%;
+  z-index: 1;
+  &.main {
+    background-color: $bluelight;
+  }
+  &.inner {
+    width: 55px;
+    padding: 36px 12px 50px;
+  }
+
+  ul {
+    li {
+      text-align: center;
+      a {
+        font-size: 12px;
+        color: $gray;
+        cursor: pointer;
+        &.active {
+          color: $primaryColor;
+        }
+      }
+      span {
+        width: 42px;
+        height: 42px;
+        margin: 0 auto 8px;
+        border-radius: 5px;
+        padding: 8px;
+        &.active {
+          & + a {
+            color: $primaryColor;
+          }
+          background: linear-gradient(149deg, $primaryColor 0%, #039999 100%);
+          box-shadow: 0px 4px 20px 0px rgba(0, 89, 130, 0.27);
+
+          img {
+            filter: brightness(0) invert(1);
+          }
+        }
+      }
+      & + li {
+        margin-top: 36px;
+      }
+    }
+  }
+}

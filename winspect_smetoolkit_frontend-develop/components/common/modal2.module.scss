@@ -1,0 +1,13 @@
+.modalbox {
+  position: absolute !important;
+  top: 50%;
+  margin: -109px 0 0 -400px !important;
+  left: 50%;
+
+  .modalContent {
+    border-radius: 24px !important;
+    h3 {
+      text-align: center;
+    }
+  }
+}

@@ -1,0 +1,20 @@
+@import "../../../../../scss/variable";
+.wrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 16px;
+  .count {
+    font-size: 12px;
+    font-weight: 600;
+    font-family: $axiforma-semibold;
+    line-height: 20px;
+    color: #344054;
+    span {
+      font-weight: 400;
+      font-family: $axiforma-regular;
+    }
+  }
+  .arrow {
+    cursor: pointer;
+  }
+}

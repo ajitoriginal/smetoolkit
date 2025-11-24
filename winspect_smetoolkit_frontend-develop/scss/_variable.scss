@@ -1,0 +1,107 @@
+// Color Variables
+$primaryColor: #005982;
+$secondaryColor: #028391;
+$black: #000000;
+$bluelight: #edf3f6;
+$white: #fff;
+$gray: #6c6c6c;
+$gray1: #2b2b2b;
+$gray2: #a8a8a8;
+$inputboder: #d4c5c5;
+$error: #c78d8d;
+$linkColor: #2f80ed;
+$lightBlue: #e6f7ff;
+//Font Face
+@font-face {
+  font-family: "Axiforma Light";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("Axiforma Light"),
+    url("../public/Fonts/Axiforma-Light.woff") format("woff");
+}
+@font-face {
+  font-family: "Axiforma Regular";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("Axiforma Regular"),
+    url("../public/Fonts/Axiforma-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "Axiforma Medium";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("Axiforma Medium"),
+    url("../public/Fonts/Axiforma-Medium.woff") format("woff");
+}
+@font-face {
+  font-family: "Axiforma SemiBold";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("Axiforma SemiBold"),
+    url("../public/Fonts/Axiforma-SemiBold.woff") format("woff");
+}
+@font-face {
+  font-family: "Axiforma Bold";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("Axiforma Bold"),
+    url("../public/Fonts/Axiforma-Bold.woff") format("woff");
+}
+@font-face {
+  font-family: "Axiforma ExtraBold";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("Axiforma ExtraBold"),
+    url("../public/Fonts/Axiforma-ExtraBold.woff") format("woff");
+}
+@font-face {
+  font-family: "Axiforma Black";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("Axiforma Black"),
+    url("../public/Fonts/Axiforma-Black.woff") format("woff");
+}
+
+// Font Variables
+$axiforma-light: "Axiforma Light", sans-serif;
+$axiforma-regular: "Axiforma Regular", sans-serif;
+$axiforma-medium: "Axiforma Medium", sans-serif;
+$axiforma-semibold: "Axiforma SemiBold", sans-serif;
+$axiforma-bold: "Axiforma Bold", sans-serif;
+$axiforma-extrabold: "Axiforma ExtraBold", sans-serif;
+$axiforma-black: "Axiforma Black", sans-serif;
+
+// Media Queries Variable
+$desktop-width: 1199px;
+$tablet-width: 991px;
+$mobile-landscape-width: 768px;
+$mobile-width: 576px;
+
+// Media Queries Mixin
+@mixin desktop {
+  @media (max-width: #{$desktop-width}) {
+    @content;
+  }
+}
+@mixin tablet {
+  @media (max-width: #{$tablet-width}) {
+    @content;
+  }
+}
+@mixin mobileLandscape {
+  @media (max-width: #{$mobile-landscape-width}) {
+    @content;
+  }
+}
+@mixin mobile {
+  @media (max-width: #{$mobile-width}) {
+    @content;
+  }
+}

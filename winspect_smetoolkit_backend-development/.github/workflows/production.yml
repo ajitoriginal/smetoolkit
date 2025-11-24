@@ -1,0 +1,89 @@
+name: deploy-production
+
+on:
+    push:
+        branches: [main]
+
+env:
+    AWS_REGION: us-east-1 # set this to your preferred AWS region, e.g. us-west-1
+    ECR_REPOSITORY: winspect-backend-smetoolkit-prod # set this to your Amazon ECR repository name
+    ECS_SERVICE: smetoolkit-backend # set this to your Amazon ECS service name
+    ECS_CLUSTER: WINSPECT-PRODUCTION # set this to your Amazon ECS cluster name
+    ECS_TASK_DEFINITION: .aws/configuration/taskdef.json # set this to the path to your Amazon ECS task definition                                           # file, e.g. .aws/task-definition.json
+    CONTAINER_NAME: winspect-smetlkt-backend-prod-pipeline # set this to the name of the container in the # containerDefinitions section of your task definition
+    PIPELINE_NAME: winspect-smetoolkit-backend-prod-github
+
+permissions:
+    actions: write
+    checks: write
+    contents: write
+    deployments: write
+    issues: write
+    packages: write
+    pull-requests: write
+    repository-projects: write
+    security-events: write
+    statuses: write
+
+jobs:
+    # deploy:
+    #     name: Deploy
+    #     runs-on: ubuntu-latest
+    #     environment: production
+
+    #     steps:
+    #     - name: Checkout
+    #       uses: actions/checkout@v3
+
+    #     - name: Configure AWS credentials
+    #       uses: aws-actions/configure-aws-credentials@v1
+    #       with:
+    #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #         aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+    #         aws-region: ${{ env.AWS_REGION }}
+
+    #     - name: Login to Amazon ECR
+    #       id: login-ecr
+    #       uses: aws-actions/amazon-ecr-login@v1
+
+    #     - name: Build, tag, and push image to Amazon ECR
+    #       id: build-image
+    #       env:
+    #         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+    #         IMAGE_TAG: ${{ github.sha }}
+    #       run: |
+    #         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+    #         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+    #         cp .aws/configuration/taskdef.json .
+    #         cp .aws/configuration/appspec.yaml .
+    #         # echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+      
+    #     - name: Trigger AWS CodePipeline
+    #       run: |
+    #         aws codepipeline start-pipeline-execution --name $PIPELINE_NAME
+            
+    release-tag:
+        name: Release build and tag
+        runs-on: ubuntu-latest
+        environment: production
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  fetch-depth: "0"
+
+            - name: Bump version and Create Tag and Push Tag
+              uses: anothrNick/github-tag-action@1.64.0
+              id: vars
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  WITH_V: true
+                  INITIAL_VERSION: 1.0.0
+              with:
+                  version: ${{ steps.vars.outputs.new_version }}
+
+            - uses: "marvinpinto/action-automatic-releases@latest"
+              with:
+                  repo_token: "${{ secrets.GITHUB_TOKEN }}"
+                  automatic_release_tag: "${{ steps.vars.outputs.new_tag }}"
+                  prerelease: true
+                  title: "Release ${{ steps.vars.outputs.new_tag }} of prod-smeapi.winspectdev.com"

@@ -1,0 +1,35 @@
+.popupWrapper {
+  position: absolute;
+  left: 0;
+  top: 50px;
+  background: #ffffff;
+  padding: 16px 20px;
+  border-radius: 10px;
+  z-index: 9;
+  .title {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22.46px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 5px;
+    margin-bottom: 17px;
+  }
+  .inputWrapper {
+    display: flex;
+    column-gap: 17px;
+    margin-top: 20px;
+    align-items: center;
+    font-size: 12px;
+    div {
+      flex: 1;
+      border-radius: 5px;
+      border: 1px solid #d0d5dd;
+      padding: 5px 8px;
+      text-align: center;
+      min-width: 50px;
+    }
+  }
+  .buttonWrapper {
+    margin-top: 17px;
+  }
+}

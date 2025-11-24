@@ -1,0 +1,68 @@
+@import "../../scss/variable";
+
+.rightProperty {
+  height: 100%;
+  .settingBar {
+    margin: 0 0 -55px 0;
+    flex-direction: column;
+    height: auto;
+    justify-content: space-between;
+    border-right: 1px solid #eee4e4;
+    box-shadow: 0px 4px 4px 0px rgba($black, 0.25);
+    .userDetail {
+      padding: 20px;
+      .imgBox {
+        background: url("/images/imgbg.svg") center / cover no-repeat;
+        height: 68px;
+        width: 68px;
+        margin-right: 8px;
+        img {
+          width: 23px;
+        }
+      }
+      h2 {
+        font-size: 20px;
+        font-family: $axiforma-regular;
+        text-transform: capitalize;
+      }
+      p {
+        opacity: 0.4;
+        color: $primaryColor;
+        font-size: 18px;
+      }
+    }
+    .settingOptions {
+      li {
+        padding: 18px 20px;
+        font-size: 20px;
+        color: $primaryColor;
+        font-family: $axiforma-semibold;
+        transition: 0.5s;
+        margin-bottom: 10px;
+        min-width: 330px;
+        cursor: pointer;
+        &:hover {
+          background-color: $bluelight;
+        }
+        &.active {
+          background: var(
+            --button-style,
+            linear-gradient(149deg, #005982 15.1%, #039999 100%)
+          );
+          box-shadow: 0px 4px 20px 0px rgba(0, 89, 130, 0.27);
+          img {
+            filter: brightness(0) invert(1);
+          }
+          color: #fff;
+        }
+        img {
+          margin-right: 30px;
+          width: 30px;
+          height: 30px;
+          object-fit: contain;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}

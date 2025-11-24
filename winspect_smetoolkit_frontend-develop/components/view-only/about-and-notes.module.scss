@@ -1,0 +1,114 @@
+@import "../../scss/variable";
+
+.withBox {
+  & > ul {
+    & > div > li {
+      background: $white;
+      padding: 16px;
+      box-shadow: 0px -1px 17px 0px rgba(0, 0, 0, 0.07);
+      border-radius: 10px;
+      transition: 0.5s;
+      border: 1px solid transparent;
+      line-height: 1.5;
+      color: $gray;
+      font-family: $axiforma-medium;
+      cursor: pointer;
+      &.showCheckboxLi {
+        padding-left: 37px;
+      }
+      .dragIcon {
+        margin-right: 5px;
+        img {
+          vertical-align: -8px;
+          min-width: 28px;
+        }
+      }
+      span {
+        border-bottom: 1px solid transparent;
+      }
+      & > img {
+        width: 20px;
+      }
+      &:hover,
+      &.active {
+        border-color: #005982;
+      }
+      &.drop {
+        border-color: $primaryColor;
+        & > img {
+          transform: rotate(180deg);
+        }
+      }
+      &.AddNewBox {
+        input {
+          color: #6d778a;
+          padding: 0;
+          border: 0;
+          line-height: 1.5625;
+        }
+      }
+      .editButtonInput {
+        width: 100%;
+        input {
+          padding: 0;
+          box-sizing: border-box;
+          background: inherit;
+          color: inherit;
+          width: 100;
+          line-height: 1.56;
+          border: 0;
+        }
+      }
+      .actionbox {
+        left: auto;
+        right: 0;
+        &.singleBox {
+          width: 60px;
+        }
+      }
+      .checkbox {
+        position: absolute;
+        left: 13px;
+        top: 50%;
+        margin-top: -13px;
+      }
+    }
+    & > div:not(:last-child) {
+      margin-bottom: 16px;
+    }
+  }
+  .leftPos {
+    left: 110px;
+  }
+}
+
+.selectedSubCategoryCountWrapper {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(99, 47, 248, 0.15);
+  border-bottom: 1px solid rgba(99, 47, 248, 0.15);
+  background: rgba(212, 212, 213, 0.15);
+  padding: 9px 5px 9px 24px;
+  .leftPart {
+    display: flex;
+    align-items: center;
+    column-gap: 11px;
+    font-size: 14px;
+    .cancelSelectedBtn {
+      cursor: pointer;
+    }
+  }
+  .rightPart {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+  .copyToBtn {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    column-gap: 4px;
+    color: $linkColor;
+    cursor: pointer;
+  }
+}

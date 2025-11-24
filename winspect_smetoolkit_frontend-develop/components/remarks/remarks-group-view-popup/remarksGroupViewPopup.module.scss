@@ -1,0 +1,72 @@
+@import "../../../scss/variable";
+.wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  padding: 30px 0;
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  &.withMultiPopup {
+    padding-bottom: 110px;
+  }
+  .popup {
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 1407px;
+    margin: 0 auto;
+    .titleWrapper {
+      display: flex;
+      background-color: $primaryColor;
+      padding: 25px 35px 16px 26px;
+      align-items: center;
+      .title {
+        color: #fff;
+      }
+      .close {
+        margin-left: auto;
+        width: 32px;
+        height: 32px;
+        border-radius: 32px;
+        background-color: #337a9b;
+        cursor: pointer;
+        svg {
+          position: relative;
+          left: 12px;
+          top: 7px;
+        }
+      }
+    }
+    .content {
+      padding: 20px 24px;
+    }
+    .columnTitleWrapper {
+      background-color: $lightBlue;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: $axiforma-semibold;
+      color: #004461;
+      display: flex;
+      padding: 17px 0 12px;
+      margin-bottom: 12px;
+      border-radius: 10px 10px 0 0;
+      .columnTitle {
+        flex: 1;
+        padding: 0 20px;
+      }
+    }
+
+    .twoColumns {
+      display: flex;
+      column-gap: 46px;
+      .columnWrapper {
+        width: 50%;
+      }
+    }
+  }
+}

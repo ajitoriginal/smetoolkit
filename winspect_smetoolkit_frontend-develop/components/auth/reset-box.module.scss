@@ -1,0 +1,39 @@
+@import "../../scss/variable";
+
+.resetBox {
+  text-align: center;
+  h3 {
+    font-family: $axiforma-semibold;
+    font-size: 25px;
+    margin-bottom: 7px;
+  }
+  p {
+    color: $gray;
+    letter-spacing: 0.005em;
+    margin-bottom: 45px;
+  }
+  h4 {
+    letter-spacing: 0.005em;
+    font-size: 20px;
+    font-family: $axiforma-regular;
+    color: $black;
+    margin-bottom: 40px;
+    span {
+      margin-right: 12px;
+      display: inline-block;
+      color: $gray;
+    }
+  }
+  .btnWrapper {
+    button,
+    a {
+      width: 50%;
+      &:first-child {
+        margin-right: 12px;
+      }
+      &:last-child {
+        margin-left: 12px;
+      }
+    }
+  }
+}

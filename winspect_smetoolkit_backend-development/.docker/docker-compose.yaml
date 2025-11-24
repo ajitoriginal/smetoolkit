@@ -1,0 +1,30 @@
+services:
+  winspect-backend-sme-dev:
+    image: 699630347910.dkr.ecr.us-east-1.amazonaws.com/winspect-sme-toolkit-dev:latest
+    ports:
+      - "3002:3000"
+    env_file:
+      - winspect_backend_sme_dev.env
+    command: npm run migrate-and-start
+    logging:
+      driver: "awslogs"
+      options:
+        awslogs-region: "us-east-1"
+        awslogs-group: "/docker/winspect-backend-sme-dev"
+        awslogs-stream: "winspect-backend-sme-dev-log"
+        awslogs-create-group: "true"
+
+  winspect-backend-sme-staging:
+    image: 699630347910.dkr.ecr.us-east-1.amazonaws.com/winspect-sme-toolkit-staging:latest
+    ports:
+      - "3003:3000"
+    env_file:
+      - winspect_backend_sme_staging.env
+    command: npm run migrate-and-start
+    logging:
+      driver: "awslogs"
+      options:
+        awslogs-region: "us-east-1"
+        awslogs-group: "/docker/winspect-backend-sme-staging"
+        awslogs-stream: "winspect-backend-sme-staging-log"
+        awslogs-create-group: "true"

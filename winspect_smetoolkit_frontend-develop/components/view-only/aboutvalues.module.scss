@@ -1,0 +1,186 @@
+@import "../../scss/variable";
+
+.innerAbout {
+  border-radius: 10px;
+  border: 1px solid $primaryColor;
+  background: $white;
+  margin-top: 10px;
+  overflow: hidden;
+  .funHeader {
+    padding: 14px;
+    margin-bottom: 0 !important;
+    .multisingle {
+      border-radius: 5px;
+      border: 1px solid $primaryColor;
+      width: 100%;
+      h3 {
+        font-size: 14px !important;
+        cursor: pointer;
+        width: 50%;
+        margin: 0 !important;
+        border-radius: 4px;
+        text-align: center;
+        padding: 6.8px 10px;
+        line-height: 1.6;
+        color: rgba($black, 0.64);
+        font-family: $axiforma-medium;
+        &.active {
+          background-color: $primaryColor;
+          color: $white;
+        }
+      }
+      &.view {
+        h3 {
+          width: 100%;
+          padding: 6px 18px;
+          text-align: left;
+        }
+      }
+    }
+    .location {
+      border-radius: 5px;
+      border: 1px solid $primaryColor;
+      padding: 6px;
+      margin-top: 8px;
+      input {
+        margin: 0 !important;
+        width: 22px;
+        height: 21px;
+        vertical-align: middle;
+        cursor: pointer;
+        border-radius: 5px;
+        border: 1px solid $primaryColor;
+        &:checked,
+        &:hover {
+          accent-color: $primaryColor;
+        }
+      }
+      span {
+        color: rgba($black, 0.64);
+        margin-left: 12px;
+        display: inline-block;
+        line-height: 22px;
+        font-size: 14px;
+        font-family: $axiforma-medium;
+      }
+      &.onlyOne {
+        opacity: 0.5;
+        pointer-events: none;
+        background-color: rgba($gray2, 0.5);
+        border: rgba($gray2, 0.5);
+        small {
+          display: block;
+          font-size: 10px;
+          margin: 5px 0 5px 32px;
+          color: $black;
+        }
+      }
+    }
+  }
+  & > div > div > li,
+  & > li {
+    padding: 0 14px;
+    font-size: 14px;
+    transition: 0.3s;
+    color: $gray;
+    background-color: $white;
+    cursor: pointer;
+    & > div {
+      border-top: 1px solid #ebebeb;
+      padding: 18px 0;
+      & > span {
+        text-decoration: underline;
+        color: $primaryColor;
+        font-size: 12px;
+        padding: 8px;
+        display: inline-block;
+      }
+      &:hover {
+        & > span {
+          color: $white;
+        }
+      }
+    }
+    .notes {
+      background-color: $gray;
+      border-radius: 5px;
+      display: inline-block;
+      margin-left: auto;
+      color: $white;
+      padding: 10px 7px;
+      text-align: center;
+      font-size: 10px;
+    }
+    &:not(.AddNewBox):hover {
+      background: $primaryColor;
+      color: $white;
+      transition: 0.3s;
+      & > div {
+        border-color: $primaryColor;
+        & > img {
+          filter: brightness(0) invert(1);
+        }
+      }
+      .actionbox {
+        left: 42%;
+        &.singleBox {
+          width: 60px;
+        }
+      }
+    }
+    .dragIcon {
+      margin-right: 5px;
+      img {
+        vertical-align: -8px;
+        min-width: 22px;
+      }
+    }
+    &:hover {
+      .dragIcon {
+        img {
+          filter: brightness(0) invert(1);
+        }
+      }
+    }
+  }
+  .editButtonInput {
+    input {
+      padding: 0;
+      box-sizing: border-box;
+      background: inherit;
+      color: inherit;
+      width: 100%;
+      border: 0;
+      font-family: $axiforma-regular;
+      font-size: 14px;
+      line-height: 1.05;
+    }
+  }
+  .addAboutValues {
+    font-size: 16px;
+    color: $primaryColor;
+    font-family: $axiforma-medium;
+    img {
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+  }
+  .AddNewBox {
+    & > div {
+      box-shadow: 0px -1px 17px 0px rgba(0, 0, 0, 0.07);
+      border-radius: 5px;
+      border-top: 0;
+      margin-bottom: 16px;
+      padding: 15.3px 20px;
+    }
+    input {
+      padding: 0;
+      box-sizing: border-box;
+      color: inherit;
+      width: 100%;
+      font-size: 14px;
+      border: 0;
+      font-family: $axiforma-regular;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+@import "../../scss/variable";
+
+.loginbox {
+  max-width: 500px;
+  margin: 0 auto;
+  .inputbox {
+    position: relative;
+    &.error {
+      input {
+        border-color: red !important;
+      }
+    }
+    & + .inputbox {
+      margin-top: 50px;
+    }
+  }
+  .forgot {
+    margin: 14px 0 24px;
+    color: $primaryColor;
+    font-family: $axiforma-semibold;
+    display: inline-block;
+    font-size: 16px;
+  }
+}

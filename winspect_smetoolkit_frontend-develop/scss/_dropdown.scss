@@ -1,0 +1,56 @@
+.breadcrumb-wrapper {
+  .css-13cymwt-control,
+  .css-t3ipsp-control {
+    padding: 0;
+    height: 29px;
+    min-height: 0 !important;
+    border-radius: 7px !important;
+    .css-1dimb5e-singleValue,
+    .css-1jqq78o-placeholder {
+      font-size: 12px;
+    }
+    > div {
+      padding: 2px 6px;
+    }
+  }
+  .dropdown-iconB {
+    width: 10px;
+    height: 6px;
+    *,
+    * path {
+      fill: #6c6c6c;
+    }
+  }
+}
+
+.remark-filter {
+  .css-13cymwt-control,
+  .css-t3ipsp-control {
+    padding: 0;
+    height: 36px;
+    min-height: 0 !important;
+    border-radius: 7px !important;
+    border: 0 !important;
+    .css-1dimb5e-singleValue,
+    .css-1jqq78o-placeholder {
+      font-size: 12px;
+    }
+    .css-1fdsijx-ValueContainer {
+      padding: 2px 6px;
+    }
+  }
+  .dropdown-iconB {
+    width: 10px;
+    height: 6px;
+    *,
+    * path {
+      fill: #6c6c6c;
+    }
+  }
+  #react-select-7-listbox {
+    width: 110px;
+  }
+  .optionWrapper {
+    font-size: 12px;
+  }
+}

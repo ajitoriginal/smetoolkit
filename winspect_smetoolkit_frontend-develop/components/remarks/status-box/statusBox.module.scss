@@ -1,0 +1,23 @@
+@import "../../../scss/variable";
+.wrapper {
+  padding: 1px 6px 1px 18px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: $axiforma-medium;
+  line-height: 18px;
+  border: 1px solid #d0d5dd;
+  position: relative;
+  background-color: #fff;
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    width: 6px;
+    height: 6px;
+    border-radius: 6px;
+    background: #17b26a;
+  }
+}

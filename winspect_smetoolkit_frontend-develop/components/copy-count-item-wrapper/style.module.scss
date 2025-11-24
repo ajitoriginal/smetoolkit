@@ -1,0 +1,31 @@
+@import "../../scss/variable";
+.selectedSubCategoryCountWrapper {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(99, 47, 248, 0.15);
+  border-bottom: 1px solid rgba(99, 47, 248, 0.15);
+  background: rgba(212, 212, 213, 0.15);
+  padding: 9px 5px 9px 24px;
+  .leftPart {
+    display: flex;
+    align-items: center;
+    column-gap: 11px;
+    font-size: 14px;
+    .cancelSelectedBtn {
+      cursor: pointer;
+    }
+  }
+  .rightPart {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+  .copyToBtn {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    column-gap: 4px;
+    color: $linkColor;
+    cursor: pointer;
+  }
+}

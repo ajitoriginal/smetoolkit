@@ -1,0 +1,23 @@
+.group-view-columns {
+  .title-wrapper {
+    display: none !important;
+  }
+  .remark-wrapper {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0 !important;
+    padding: 0 0 23px !important;
+    background: none;
+    margin-bottom: 23px !important;
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+  .column-wrapper {
+    flex: 1;
+    padding: 16px 12px;
+    &:nth-child(2) {
+      border-radius: 10px;
+      background: rgba(242, 251, 255, 0.85);
+    }
+  }
+}

@@ -1,0 +1,45 @@
+@import "../../../scss/variable";
+.popupWrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  display: flex;
+  box-shadow: 0px -12px 24px 0px rgba(0, 0, 0, 0.16);
+  justify-content: center;
+  column-gap: 40px;
+  padding: 15px 20px 16px;
+  button {
+    display: flex;
+    align-items: center;
+    padding: 16px 25px;
+    border-radius: 12px;
+    background-color: $primaryColor;
+    color: #fff;
+    column-gap: 5px;
+    svg {
+      position: relative;
+      top: -2px;
+    }
+    &.outlined {
+      background: none;
+      border: 1px solid $primaryColor;
+      color: $primaryColor;
+    }
+    &.red {
+      color: #ab2727;
+
+      background: linear-gradient(
+          0deg,
+          rgba(210, 98, 98, 0.4),
+          rgba(210, 98, 98, 0.4)
+        ),
+        linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.4),
+          rgba(255, 255, 255, 0.4)
+        );
+    }
+  }
+}

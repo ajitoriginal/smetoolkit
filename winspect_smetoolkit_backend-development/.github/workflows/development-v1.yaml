@@ -1,0 +1,138 @@
+name: Development-Install-Build-Deploy
+
+on:
+  push:
+    branches: [development]
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  checks: write
+  contents: write
+  deployments: write
+  issues: write
+  packages: write
+  pull-requests: write
+  repository-projects: write
+  security-events: write
+  statuses: write
+
+jobs:
+  get-envs:
+    name: Get Environment Variables AWS
+    runs-on: ubuntu-latest
+    outputs:
+      env_file_path: ${{ steps.upload_artifact.outputs.artifact_path }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r deployments/requirements.txt
+
+      - name: Run Python script to generate .env file
+        env:
+          AWS_ACCESS_KEY_INFRA: ${{ secrets.AWS_ACCESS_KEY_INFRA }}
+          AWS_SECRET_KEY_INFRA: ${{ secrets.AWS_SECRET_KEY_INFRA }}
+          ENVIRONMENT_NAME: development
+        run: |
+          python deployments/infra_dev.py
+
+      - name: List files in the directory
+        run: |
+          echo "Files in the directory:"
+          ls -la deployments/
+
+      - name: Upload .env file as artifact
+        id: upload_artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: winspect_backend_sme_dev
+          path: deployments/winspect_backend_sme_dev.env
+
+  build-with-docker-and-deploy:
+    name: Build Image and Push To ECR
+    needs: get-envs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_INFRA }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_INFRA }}
+          aws-region: us-east-1
+
+      - uses: benjlevesque/short-sha@v1.2
+        id: short-sha
+        with:
+          length: 6
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      # Versioning Strategy : ${MAJOR.MINOR.PATCH} ---- FOLLOW THIS ON EVERY PUSH
+      - name: Build, Tag & Push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ steps.short-sha.outputs.sha }}
+        run: |
+          docker build --file .docker/Dockerfile -t $ECR_REGISTRY/winspect-sme-toolkit-dev:$IMAGE_TAG -t $ECR_REGISTRY/winspect-sme-toolkit-dev:latest .
+          docker push $ECR_REGISTRY/winspect-sme-toolkit-dev:$IMAGE_TAG
+          docker push $ECR_REGISTRY/winspect-sme-toolkit-dev:latest
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: winspect_backend_sme_dev
+          path: downloaded
+
+      - name: Move file to target directory
+        run: |
+          mv downloaded/winspect_backend_sme_dev.env deployments/
+          mv .docker/docker-compose.yaml deployments/
+
+
+      - name: List files in the directory
+        run: |
+          echo "Files in the directory:"
+          ls -la deployments/
+
+      - name: Deploy to EC2
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY_INFRA }}
+          REMOTE_HOST: ${{ secrets.EC2_HOST_INFRA }}
+          REMOTE_USER: ${{ secrets.EC2_USER_INFRA }}
+          SOURCE: "deployments"
+          TARGET: "backend/sme"
+          SCRIPT_AFTER: |
+            cd backend/sme/deployments
+            docker compose pull winspect-backend-sme-dev
+            docker compose down winspect-backend-sme-dev
+            docker compose up --build -d winspect-backend-sme-dev
+  
+
+  slackNotification:
+    name: Slack Notification-SMETOOLKIT
+    needs:
+      - build-with-docker-and-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Slack Workflow Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: deployment-alerts
+          SLACK_TITLE: MESSAGE
+          SLACK_USERNAME: WIN-Services-Bot
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_FOOTER: api.winspectdev.com/api-docs [development]

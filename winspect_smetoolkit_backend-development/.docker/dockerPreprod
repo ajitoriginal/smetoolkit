@@ -1,0 +1,63 @@
+FROM public.ecr.aws/docker/library/node:18.2-alpine
+
+RUN apk update
+RUN apk upgrade
+RUN apk -a info curl
+RUN apk add curl
+RUN apk add --no-cache libc6-compat
+
+WORKDIR /app
+
+COPY package.json /app
+
+RUN npm install
+
+COPY . /app
+
+ARG PORT=3001
+ARG NODE_ENV=preprod
+ARG BASE_PATH=/api/v1
+ARG HOSTIP=http://localhost
+ARG INTERACTIVE_REPORT_URL=https://google.com
+ARG INTERACTIVE_REPORT_TITLE=Interactive-Report
+ARG SWAGGER_URL=http://preprod-smeapi.winspectdev.com/api/v1
+
+
+ARG EMAIL_SENDER=productfeedback@winhomeoffice.com
+
+
+#S3
+ARG AWS_S3_BUCKET_NAME=winspect-preprod
+ARG S3_Location=https://winspect-preprod.s3.amazonaws.com/
+
+ARG AI_TEAM_EMAIL=akhan@winhomeoffice.com
+ARG SEARCH_UPLOAD_URL=http://preprod.search.winspectdev.com/publish_template
+ARG SEARCH_REPO_LAMBDA=WINSPECT-SME-PublishTemplate-preprod
+ARG ES_REMARK_ENDPOINT=http://preprod.search.winspectdev.com/remark
+ 
+# ENV
+
+ENV PORT=${PORT}
+ENV NODE_ENV=${NODE_ENV}
+ENV BASE_PATH=${BASE_PATH}
+ENV HOSTIP=${HOSTIP}
+ENV INTERACTIVE_REPORT_URL=${INTERACTIVE_REPORT_URL}
+ENV INTERACTIVE_REPORT_TITLE=${INTERACTIVE_REPORT_TITLE}
+ENV SWAGGER_URL=${SWAGGER_URL}
+
+
+ENV EMAIL_SENDER=${EMAIL_SENDER}
+
+
+#S3
+ENV AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME}
+ENV S3_Location=${S3_Location}
+
+ENV AI_TEAM_EMAIL=${AI_TEAM_EMAIL}
+ENV SEARCH_UPLOAD_URL=${SEARCH_UPLOAD_URL}
+ENV SEARCH_REPO_LAMBDA=${SEARCH_REPO_LAMBDA}
+ENV ES_REMARK_ENDPOINT=${ES_REMARK_ENDPOINT}
+
+EXPOSE 3001
+
+CMD [ "npm", "run", "migrate-and-start" ]

@@ -1,0 +1,31 @@
+@import "../../../../scss/variable";
+.deleteRemarkImageModal {
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 24px !important;
+  max-width: 442px;
+  margin: 0 auto;
+  .title,
+  .content {
+    color: #2b2b2b;
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    font-family: $axiforma-medium;
+  }
+  .content {
+    font-family: $axiforma-bold;
+  }
+  .primaryBtn {
+    border-radius: 12px;
+    border: 1px solid #d26262;
+    background: #d26262;
+    padding: 16px 24px;
+  }
+  .secondaryBtn {
+    width: 160px;
+    text-align: center;
+  }
+}

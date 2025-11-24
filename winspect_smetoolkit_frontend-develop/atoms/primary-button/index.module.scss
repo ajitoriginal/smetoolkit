@@ -1,0 +1,18 @@
+.button {
+  padding: 10px 42px;
+  background: #005982;
+  font-size: 14px;
+  line-height: 24.67px;
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+
+  &.disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+  }
+}

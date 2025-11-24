@@ -1,0 +1,76 @@
+name: Staging-Install-Build-Deploy
+
+on:
+  push:
+    branches: [staging]
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  checks: write
+  contents: write
+  deployments: write
+  issues: write
+  packages: write
+  pull-requests: write
+  repository-projects: write
+  security-events: write
+  statuses: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.17.0
+
+      - name: List
+        run: |
+          ls -la
+
+      - name: Install dependencies
+        run: npm -f install
+
+      - name: Set ENV
+        run: |
+          rm -rf .env
+          echo -e "NEXT_PUBLIC_PORT=7003\nNEXT_PUBLIC_APP_NAME=https://staging.winspectdev.com/be/sme/\nPORT=7003" >> .env
+
+      - name: Build next.js app
+        run: ./node_modules/.bin/next build
+
+      - name: Deploy to EC2
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY_INFRA }}
+          REMOTE_HOST: ${{ secrets.EC2_HOST_INFRA }}
+          REMOTE_USER: ${{ secrets.EC2_USER_INFRA }}
+          SOURCE: "."
+          TARGET: "frontend/smetoolkit/staging"
+          SCRIPT_AFTER: |
+            cd frontend/smetoolkit/staging
+            rm -rf .env
+            echo -e "NEXT_PUBLIC_PORT=7003\nNEXT_PUBLIC_APP_NAME=https://staging.winspectdev.com/be/sme/\nPORT=7003" >> .env
+            pm2 describe smetoolkit_frontend_staging > /dev/null && pm2 stop smetoolkit_frontend_staging && pm2 delete smetoolkit_frontend_staging
+            pm2 start npm --name "smetoolkit_frontend_staging" -- start -- -p 7003
+
+  slackNotification:
+    name: Slack Notification
+    needs: ["build"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Slack Workflow Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: deployment-alerts
+          SLACK_TITLE: Deployment Status
+          SLACK_USERNAME: WIN-Services-Bot
+          SLACK_ICON: ${{ secrets.SLACK_ICON_URL }}
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_FOOTER: SMETOOLKIT [FRONTEND Staging]
+          SLACK_MESSAGE: ${{ github.event.head_commit.message }}

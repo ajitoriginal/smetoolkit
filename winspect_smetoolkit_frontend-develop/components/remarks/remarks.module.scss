@@ -1,0 +1,19 @@
+.remarksPage {
+  &.withMultiPopup {
+    padding-bottom: 80px;
+  }
+  .tabSearchWrapper {
+    display: flex;
+    column-gap: 11px;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .searchWrapper {
+    margin-left: auto;
+    width: 400px;
+  }
+  .categoryWrapper {
+    display: flex;
+    margin-bottom: 15px;
+  }
+}

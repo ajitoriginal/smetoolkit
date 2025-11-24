@@ -1,0 +1,12 @@
+@import "../../scss/variable";
+
+.homeContent {
+  margin-top: 50px;
+  position: relative;
+  .homeContentHeight {
+    min-height: 1475px;
+  }
+  .homeContentHeightD {
+    min-height: 713px;
+  }
+}

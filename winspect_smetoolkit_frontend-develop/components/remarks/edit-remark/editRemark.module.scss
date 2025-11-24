@@ -1,0 +1,45 @@
+@import "../../../scss/variable";
+.wrapper {
+  position: relative;
+  margin-bottom: 11px;
+  background-color: #fff;
+  border-radius: 10px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  input {
+    width: 100%;
+    border: 0;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: $axiforma-semibold;
+    color: #000;
+    background: none;
+  }
+  .buttonWrapper {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    display: flex;
+    button {
+      padding: 7px 12px;
+      font-size: 14px;
+      font-family: $axiforma-medium;
+      color: #475467;
+      text-decoration: underline;
+      &.saveBtn {
+        background-color: $primaryColor;
+        border-radius: 8px;
+        color: #fff;
+        text-decoration: none;
+      }
+    }
+  }
+}
+.error {
+  color: #ff7979;
+  font-size: 12px;
+  margin-top: 5px;
+  text-align: center;
+}

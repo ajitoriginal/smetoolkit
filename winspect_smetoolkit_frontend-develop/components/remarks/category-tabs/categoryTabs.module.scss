@@ -1,0 +1,31 @@
+@import "../../../scss/variable";
+.wrapper {
+  display: flex;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  column-gap: 50px;
+  .tab {
+    padding: 15px 0 13px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    position: relative;
+    color: rgba(51, 51, 51, 0.6);
+    &.active {
+      color: $primaryColor;
+      font-weight: 700;
+      font-family: $axiforma-bold;
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background-color: $primaryColor;
+        border-radius: 12px 12px 0 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+@import "../../scss/variable";
+
+.rightProperty {
+  margin-top: 30px;
+  ul {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 20px;
+    li {
+      padding: 15px 20px;
+      width: calc(25% - 15px);
+      border-radius: 10px;
+      background: $white;
+      box-shadow: 0px -1px 17px 0px rgba($black, 0.07);
+      color: $gray;
+      font-family: $axiforma-medium;
+      font-size: 14px;
+    }
+  }
+  .btnWrapper {
+    text-align: center;
+    margin-top: 40px;
+  }
+}

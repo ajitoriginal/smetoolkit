@@ -1,0 +1,225 @@
+@import "../../scss/variable";
+
+.sliderBox {
+  .addForSlider:not(:hover) {
+    background-color: $white;
+    margin-bottom: 0;
+    min-width: 83px;
+  }
+  .slideContent {
+    padding: 20px;
+    border-radius: 8px;
+    &.searchResults {
+      h4 {
+        color: $gray;
+        .searchedString {
+          font-family: "Axiforma Bold", sans-serif !important;
+        }
+      }
+    }
+    .remarkTitleWrapper {
+      display: flex;
+      align-items: center;
+      column-gap: 5px;
+      .checkbox {
+        position: relative;
+        top: -2px;
+      }
+    }
+    h4 {
+      color: $gray1;
+      img {
+        margin-right: 10px;
+        display: inline-block;
+        width: 20px;
+      }
+    }
+    ol,
+    ul {
+      list-style-position: inside !important;
+      line-height: 1.6;
+    }
+    ol {
+      list-style-type: decimal !important;
+    }
+    ul {
+      list-style-type: disc !important;
+    }
+    .remarkContent {
+      font-size: 12px;
+      color: #646464;
+      line-height: 1.6;
+    }
+    p,
+    li {
+      font-size: 12px;
+      color: #646464;
+    }
+    &:nth-of-type(odd) {
+      background: rgba(0, 89, 130, 0.07);
+    }
+    &:nth-of-type(even) {
+      background: rgba(210, 98, 98, 0.07);
+    }
+    &:not(:last-child) {
+      margin-bottom: 15px;
+    }
+    &.editing {
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+  }
+  .addBoxInputText {
+    padding: 16px;
+    border-radius: 10px;
+    background: rgba(0, 89, 130, 0.07);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    margin-bottom: 16px;
+  }
+  .editBoxInputText {
+    width: 100%;
+  }
+}
+
+.remarkSearchAddWrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  .remarkSearchWrapper {
+    border-radius: 10px;
+    background: #fff;
+    border: 1px solid #fff;
+    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.06);
+    position: relative;
+    width: 100%;
+    margin-right: 24px;
+    max-width: 350px;
+    &.focused {
+      border: 1px solid #005982;
+
+      box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.12);
+    }
+    input {
+      background: none;
+      border: 0;
+      font-size: 12px;
+      padding: 11px 10px 11px 39px;
+      width: 100%;
+
+      color: #005982;
+      font-style: normal;
+      font-weight: 600;
+      font-family: $axiforma-semibold;
+      line-height: normal;
+    }
+    img {
+      width: 16px;
+      height: auto;
+      position: absolute;
+      left: 12px;
+      top: 9px;
+    }
+    .clear {
+      border-radius: 75px;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      width: 16px;
+      height: 16px;
+      padding: 6.75px;
+      justify-content: center;
+      align-items: center;
+      gap: 7.5px;
+      flex-shrink: 0;
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      cursor: pointer;
+      img {
+        width: 8px;
+        height: 8px;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+      }
+    }
+  }
+  .addForSlider {
+    margin-bottom: 0 !important;
+  }
+}
+
+.reviewHeading {
+  margin-bottom: 10px;
+  position: relative;
+}
+.slideContent {
+  .actionBarBig {
+    left: unset;
+    right: -20px;
+    width: 180px;
+  }
+  &:hover .actionBar {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.addBoxInputText input,
+.editBoxInputText input {
+  font-size: 16px;
+  color: #2b2b2b;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border-bottom: 0;
+  margin-bottom: 10px;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.slider {
+  padding: 25px 15px;
+  position: relative;
+  .addForSlider {
+    position: absolute;
+    bottom: 0;
+    right: 15px;
+    top: unset;
+    margin: 0;
+  }
+  .slideContent {
+    border-bottom: 2px solid rgba(0, 89, 130, 0.07);
+    padding: 0 15px 18px;
+    margin-bottom: 18px;
+    h4 {
+      color: $primaryColor;
+      font-family: $axiforma-regular;
+      img {
+        margin-right: 10px;
+        display: inline-block;
+        width: 20px;
+      }
+    }
+    & > p {
+      font-size: 16px;
+      color: $gray;
+      ol,
+      ul {
+        list-style-position: inside !important;
+      }
+      ol {
+        list-style-type: decimal !important;
+      }
+      ul {
+        list-style-type: disc !important;
+      }
+    }
+    .reviewHeading {
+      margin-bottom: 15px;
+    }
+  }
+  .addBoxInputText,
+  .editBoxInputText {
+    padding: 16px;
+    background: $bluelight;
+    width: 100%;
+  }
+}

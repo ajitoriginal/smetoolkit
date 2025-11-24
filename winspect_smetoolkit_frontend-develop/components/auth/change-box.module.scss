@@ -1,0 +1,24 @@
+@import "../../scss/variable";
+
+.changeBox {
+  max-width: 500px;
+  margin: 0 auto;
+  .inputbox {
+    & + .inputbox {
+      margin-top: 50px;
+    }
+  }
+  .btnWrapper {
+    margin-top: 50px;
+    button,
+    a {
+      width: 50%;
+      &:first-child {
+        margin-right: 12px;
+      }
+      &:last-child {
+        margin-left: 12px;
+      }
+    }
+  }
+}

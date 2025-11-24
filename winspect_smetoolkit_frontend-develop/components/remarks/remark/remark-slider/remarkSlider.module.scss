@@ -1,0 +1,11 @@
+.wrapper {
+  margin-bottom: 11px;
+  background-color: #fff;
+  border-radius: 10px;
+  position: relative;
+  .rightAlign {
+    position: absolute;
+    right: 23px;
+    bottom: 7px;
+  }
+}

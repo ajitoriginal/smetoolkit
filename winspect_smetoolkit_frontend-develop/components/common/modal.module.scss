@@ -1,0 +1,446 @@
+@import "../../scss/variable";
+
+.modalWrapper {
+  background: rgba($black, 0.4);
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  padding: 30px;
+  overflow: auto;
+  z-index: 101;
+  @media all and (min-height: 850px) {
+    &.step1 {
+      align-items: center;
+      display: flex;
+    }
+  }
+  @media all and (min-height: 650px) {
+    &.step2 {
+      align-items: center;
+      display: flex;
+    }
+  }
+  .modalbox {
+    width: 100%;
+    max-width: 800px;
+    margin: 30px auto;
+    box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 25%);
+    border-radius: 16px;
+    position: relative;
+    .header {
+      padding: 19px 30px;
+      align-items: center;
+      background-color: $primaryColor;
+      position: relative;
+      color: $white;
+      border-radius: 16px 16px 0 0;
+      &.headerPadding {
+        padding-left: 75px;
+      }
+      h3 {
+        font-family: $axiforma-medium;
+        color: $white !important;
+
+        /* H2 */
+
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        font-family: $axiforma-semibold;
+        line-height: normal;
+        letter-spacing: 0.27px;
+      }
+      p {
+        font-size: 20px;
+        margin-top: 8.605px;
+        &.smalltext {
+          margin-top: 0;
+          color: rgba(255, 255, 255, 0.6);
+          /* Titles */
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 500;
+          font-family: $axiforma-medium;
+          line-height: normal;
+        }
+      }
+      span {
+        cursor: pointer;
+        border: 0;
+        position: absolute;
+        top: 50%;
+        margin-top: -16px;
+        right: 20px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.2);
+        display: block;
+        display: flex;
+        width: 32px;
+        height: 32px;
+        padding: 5px 6px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+    }
+    .modalContent {
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 0 0 24px 24px;
+    }
+    .warning {
+      color: $gray;
+      font-size: 20px;
+      text-align: left;
+    }
+    .btnWrapper {
+      margin-top: 24px;
+      p {
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      button,
+      a {
+        border-radius: 10px;
+        & + button {
+          margin-left: 18px;
+        }
+      }
+      .gradient {
+        box-shadow: 0px 4px 20px 0px rgba(0, 89, 130, 0.27);
+      }
+    }
+    .modalSteps {
+      padding: 32px 30px 60px;
+      background-color: $white;
+      border-radius: 0 0 16px 16px;
+      label {
+        font-family: $axiforma-regular;
+        margin-bottom: 7px;
+        display: block;
+        color: $black;
+      }
+      .optionWrapper {
+        border-bottom: 1px solid #d9d9d9;
+        padding-bottom: 8px;
+        margin: 0 7px -8px;
+        .templateName {
+          color: #000;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+        }
+        .servicesName {
+          color: rgba(0, 0, 0, 0.6);
+
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+        }
+      }
+      .includedServices {
+        color: rgba(0, 0, 0, 0.6);
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        margin-top: -12px;
+        margin-bottom: 24px;
+      }
+      .inputWrapper {
+        margin-bottom: 24px;
+        input {
+          padding: 16px 18px;
+          border: 1px solid $gray;
+          border-radius: 10px;
+          box-sizing: border-box;
+          line-height: 1;
+          font-size: 16px;
+          color: $black;
+          font-family: $axiforma-medium;
+        }
+        p {
+          text-align: left;
+        }
+      }
+      .radioWrapper {
+        div {
+          margin-top: 20px;
+          label {
+            margin-right: 25px;
+            font-size: 16px;
+            color: $gray;
+            font-size: $axiforma-regular;
+            cursor: pointer;
+          }
+          input {
+            margin-right: 10px;
+            transform: scale(1.4);
+          }
+        }
+      }
+      .template {
+        text-align: center;
+        li {
+          display: inline-block;
+          max-width: 265px;
+          padding: 25px 35px;
+          background-color: $bluelight;
+          border-radius: 10px;
+          margin: 0 17px;
+          cursor: pointer;
+          &.active {
+            outline: 3px solid $primaryColor;
+          }
+          h4 {
+            margin: 12px 0 5px;
+            color: $gray1;
+            font-size: 18px;
+          }
+          p {
+            font-size: 14px;
+            color: $gray1;
+          }
+        }
+      }
+    }
+    .locationPopup {
+      .borderBox {
+        border-radius: 8px;
+        border: 1px solid rgba($black, 0.08);
+        background: rgba(0, 89, 130, 0);
+        padding: 10px 10px 10px 20px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        &.fade {
+          span,
+          & > p,
+          h3,
+          img {
+            opacity: 0.5;
+          }
+        }
+        & + .borderBox {
+          margin-top: 10px;
+        }
+        p {
+          color: $primaryColor;
+          font-size: 14px;
+          width: 100%;
+          padding-right: 50px;
+        }
+        input {
+          border: 0;
+          font-size: 14px;
+          font-family: $axiforma-regular;
+          color: $black;
+          line-height: 26px;
+          padding: 0 20px 0 0;
+          &::placeholder {
+            color: rgba(0, 89, 130, 0.48);
+            font-size: 14px;
+            font-family: $axiforma-regular;
+          }
+        }
+        .addBtn {
+          color: $primaryColor;
+          font-family: $axiforma-bold;
+          font-size: 14px;
+          border-radius: 5px;
+          padding: 5px 15px;
+          border: 1px solid $primaryColor;
+          &.addBtnActive {
+            background: var(
+              --button-style,
+              linear-gradient(155deg, #005982 37.62%, #039999 126.76%)
+            );
+            color: $white;
+          }
+        }
+        .menuAction {
+          display: flex;
+          align-items: center;
+          opacity: 0;
+          visibility: hidden;
+          span {
+            display: inline-block;
+            cursor: pointer;
+            & + span {
+              margin-left: 10px;
+            }
+            img {
+              height: 25px;
+              width: 25px;
+            }
+          }
+        }
+        &:hover {
+          border: 1px solid $primaryColor;
+          .menuAction {
+            opacity: 1;
+            visibility: visible;
+          }
+        }
+        .boxFade {
+          position: absolute;
+          width: 80%;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          display: none;
+          div {
+            border-radius: 100px;
+            border: 1px solid #eb5757;
+            background: linear-gradient(
+                0deg,
+                rgba(235, 87, 87, 0.1) 0%,
+                rgba(235, 87, 87, 0.1) 100%
+              ),
+              $white;
+            padding: 4px 15px;
+            p {
+              color: #eb5757;
+              margin: 0 48px 0 0;
+              strong {
+                font-family: $axiforma-bold;
+              }
+            }
+            button {
+              font-family: $axiforma-bold;
+              text-decoration-line: underline;
+              text-underline-offset: 3px;
+              color: $primaryColor;
+              font-size: 14px;
+            }
+          }
+        }
+        &.fade {
+          .boxFade {
+            display: block;
+          }
+        }
+      }
+    }
+    .dots {
+      margin-top: 30px;
+      text-align: center;
+      li {
+        display: inline-block;
+        height: 4px;
+        width: 30px;
+        border-radius: 5px;
+        background-color: $gray2;
+        margin: 0 3px;
+        &.active {
+          background-color: $primaryColor;
+        }
+      }
+    }
+    .favoriteList {
+      ul {
+        li:not(:first-child) {
+          margin-top: 21px;
+          padding-top: 21px;
+          border-top: 1px solid #d3d3d3;
+        }
+        .leftPart {
+          span {
+            font-size: 15px;
+            font-family: $axiforma-medium;
+          }
+          h3 {
+            font-size: 20px;
+            font-family: $axiforma-medium;
+            text-transform: capitalize;
+            margin-top: 5px;
+          }
+        }
+        p {
+          color: #6c6c6c;
+          margin-top: 5px;
+        }
+      }
+      .rightPart {
+        position: relative;
+        span {
+          position: absolute;
+          top: 108%;
+          right: 0;
+          border-radius: 5px;
+          border: 1px solid $primaryColor;
+          background: linear-gradient(
+              0deg,
+              rgba(2, 131, 145, 0.06) 0%,
+              rgba(2, 131, 145, 0.06) 100%
+            ),
+            $white;
+          color: $primaryColor;
+          font-size: 12px;
+          padding: 12px 32px;
+          white-space: nowrap;
+          opacity: 0;
+          visibility: hidden;
+          transition: 0.4s;
+        }
+        button:hover + span {
+          opacity: 1;
+          visibility: visible;
+        }
+        button.notWorked {
+          pointer-events: none;
+        }
+      }
+      li {
+        .boxFade {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          top: 0;
+          display: none;
+          div {
+            border-radius: 100px;
+            border: 1px solid #eb5757;
+            background: linear-gradient(
+                0deg,
+                rgba(235, 87, 87, 0.1) 0%,
+                rgba(235, 87, 87, 0.1) 100%
+              ),
+              $white;
+            padding: 12px 32px;
+            p {
+              color: #eb5757;
+              margin: 0 48px 0 0;
+            }
+            button {
+              font-family: $axiforma-bold;
+              text-decoration-line: underline;
+              text-underline-offset: 3px;
+              color: $primaryColor;
+              font-size: 16px;
+            }
+          }
+        }
+        &.fade {
+          position: relative;
+          span,
+          & > p,
+          h3,
+          img {
+            opacity: 0.2;
+          }
+          .boxFade {
+            display: flex;
+          }
+        }
+      }
+    }
+  }
+}

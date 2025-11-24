@@ -1,0 +1,242 @@
+@import "../../scss/variable";
+
+.withBox {
+  ul {
+    touch-action: none;
+    -ms-touch-action: none;
+    .dragIcon {
+      margin-right: 5px;
+      img {
+        vertical-align: -8px;
+        min-width: 28px;
+      }
+    }
+    .editButtonInput {
+      margin-right: 0 !important;
+    }
+    li .subCategoryLiInner {
+      background: $white;
+      display: flex;
+      align-items: center;
+      padding: 11px 16px;
+      box-shadow: 0px -1px 17px 0px rgba(0, 0, 0, 0.07);
+      border-radius: 10px;
+      transition: 0.5s;
+      border: 1px solid transparent;
+      line-height: 1.5;
+      cursor: pointer;
+      color: $gray;
+      font-family: $axiforma-medium;
+      position: relative;
+      &.noPrint {
+        color: #bcbcc0;
+        .checkgeneralDraft {
+          border-color: #bcbcc0;
+          pointer-events: none;
+        }
+        .dragIcon {
+          opacity: 0.3;
+        }
+      }
+      &.activeBox {
+        justify-content: space-between;
+      }
+      .checkgeneral {
+        width: 24px;
+        height: 24px;
+        background: #fff;
+        text-align: center;
+        border-radius: 100px;
+        border: 1px solid var(--Primary-colour, #005982);
+        background: linear-gradient(
+            0deg,
+            rgba(0, 89, 130, 0.1) 0%,
+            rgba(0, 89, 130, 0.1) 100%
+          ),
+          #fff;
+      }
+      .reminder {
+        width: 27px;
+        height: 27px;
+        padding: 5px 7px;
+        display: inline-block;
+        margin-left: 5px;
+        border-radius: 3px;
+        transition: 0.5s;
+        position: relative;
+        &:hover {
+          background: rgba(0, 89, 130, 0.28) !important;
+          &::before,
+          &::after {
+            opacity: 1;
+            visibility: visible;
+          }
+        }
+        img {
+          min-width: 17px;
+        }
+        &::before {
+          content: "View reminders";
+          padding: 8px 10px;
+          border: 1px solid $white;
+          border-radius: 10px;
+          background: $primaryColor;
+          color: $white;
+          position: absolute;
+          bottom: 100%;
+          left: 50%;
+          transform: translate(-50%, -10px);
+          font-size: 10px;
+          white-space: nowrap;
+          opacity: 0;
+          visibility: hidden;
+          transition: 0.4s;
+        }
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: 100%;
+          left: 50%;
+          transform: translate(-50%, -1px);
+          border-top: 10px solid $primaryColor;
+          border-left: 10px solid transparent;
+          border-right: 10px solid transparent;
+          opacity: 0;
+          visibility: hidden;
+          transition: 0.4s;
+        }
+      }
+      .checkgeneralDraft {
+        width: 24px;
+        min-width: 24px;
+        height: 24px;
+        background-color: $white;
+        border: 1px solid $primaryColor;
+        border-radius: 50%;
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &.checked {
+          border-radius: 100px;
+          border: 1px solid var(--Primary-colour, #005982);
+          background: linear-gradient(
+              0deg,
+              rgba(0, 89, 130, 0.1) 0%,
+              rgba(0, 89, 130, 0.1) 100%
+            ),
+            #fff;
+        }
+        img {
+          width: 12px;
+        }
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        left: -20px;
+        top: 0;
+        width: 7px;
+        height: 100%;
+        border-radius: 0px 10px 10px 0px;
+        // background: linear-gradient(149deg, $primaryColor 0%, #039999 100%);
+        background-color: #005982;
+        opacity: 0;
+      }
+      &:hover,
+      &.active {
+        border-color: $primaryColor;
+      }
+      &.active {
+        border-radius: 10px;
+        border: 1px solid #005982;
+        background: #fff;
+        box-shadow: 0px -1px 17px 0px rgba(0, 0, 0, 0.07);
+        .checkgeneral {
+          background: #fff;
+        }
+        &::after {
+          opacity: 1;
+        }
+        .dragIcon img {
+          filter: brightness(0) invert(1);
+        }
+        .reminder {
+          &:hover {
+            background: #005982;
+          }
+        }
+      }
+      &.AddNewBox {
+        input {
+          color: #6d778a;
+          padding: 0;
+          border: 0;
+          line-height: 1.75;
+        }
+      }
+      .subCategoriesRightItems {
+        margin-left: auto;
+      }
+    }
+    .editButtonInput {
+      width: 100%;
+      input {
+        padding: 0;
+        box-sizing: border-box;
+        background: inherit;
+        color: inherit;
+        width: 100%;
+        border: 0;
+      }
+    }
+    & > div:not(:last-child) {
+      margin-bottom: 16px;
+    }
+    .actionBar {
+      left: unset;
+      right: -20px;
+      width: auto;
+      padding-right: 17px;
+      .switch {
+        border-left: 1px solid #fff;
+        padding-left: 17px;
+        > div {
+          position: relative;
+          top: 5px;
+        }
+      }
+      button:last-child {
+        padding-right: 0;
+      }
+    }
+    .reminders {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      & > li {
+        padding: 12px 25px;
+        border-radius: 4px;
+        border: 1px solid #d3d3d3;
+        background: $white;
+        font-size: 14px;
+        font-family: $axiforma-semibold;
+      }
+    }
+  }
+  .leftPos {
+    left: 170px;
+  }
+}
+.showCheckboxLi {
+  .subCategoryLiInner {
+    padding-left: 37px !important;
+  }
+}
+.checkbox {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  margin-top: -11px;
+}

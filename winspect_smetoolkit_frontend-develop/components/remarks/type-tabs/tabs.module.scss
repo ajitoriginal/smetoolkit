@@ -1,0 +1,22 @@
+@import "../../../scss/variable";
+.wrapper {
+  display: flex;
+  border: 1px solid $primaryColor;
+  border-radius: 100px;
+
+  .tab {
+    padding: 15px 25px 13px;
+    flex: 1;
+    text-align: center;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: $axiforma-bold;
+    color: $primaryColor;
+    cursor: pointer;
+    &.active {
+      background-color: $primaryColor;
+      color: #fff;
+    }
+  }
+}

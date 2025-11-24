@@ -1,0 +1,37 @@
+.list {
+  display: flex;
+  align-items: center;
+  li {
+    font-size: 14px;
+    color: #636363;
+    position: relative;
+    padding-right: 32px;
+    &.templateName {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      span {
+        display: block;
+        overflow: hidden;
+      }
+    }
+    &:first-child {
+      &::before {
+        visibility: hidden;
+      }
+    }
+    &:before {
+      content: "";
+      display: block;
+      background: url(/images/breadcrumb-arrow.svg) no-repeat;
+      width: 7px;
+      height: 12px;
+      position: absolute;
+      left: -20px;
+      top: 50%;
+      margin-top: -7px;
+    }
+    &.hide {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,60 @@
+@import "../../../scss/variable";
+.popupWrapper {
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  z-index: 101;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .popup {
+    width: 100%;
+    max-width: 390px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 25px 20px 24px;
+    text-align: center;
+    .title,
+    h2 {
+      font-size: 20px;
+      font-weight: 500;
+      font-family: $axiforma-medium;
+      line-height: 32px;
+    }
+    h2 {
+      font-weight: 900;
+      font-family: $axiforma-extrabold;
+    }
+    .title.last {
+      margin-bottom: 33px;
+    }
+    .buttonWrapper {
+      display: flex;
+      column-gap: 20px;
+      justify-content: center;
+    }
+    button {
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 500;
+      font-family: $axiforma-medium;
+      border: 1.5px solid $primaryColor;
+      width: 160px;
+      color: $primaryColor;
+      &.red {
+        background: rgba(210, 98, 98, 0.2);
+        border: 1px solid #d26262;
+        color: #9f3737;
+      }
+    }
+  }
+}

@@ -1,0 +1,142 @@
+@import "../../scss/variable";
+
+.definitionSection {
+  margin-top: 30px;
+  padding: 20px;
+  background: $bluelight;
+  border-radius: 8px;
+  min-height: 500px;
+  position: relative;
+  .addNew {
+    color: #5e6166;
+    font-size: 12px;
+    border-radius: 5px;
+    background-color: $white;
+    padding: 7px 9px;
+    font-family: $axiforma-regular;
+  }
+  .defintionShowParent {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    border-radius: 10px;
+    border: 1px solid #008282;
+    background: $white;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    position: relative;
+    .dragIcon {
+      margin-left: -10px;
+      cursor: grab;
+      img {
+        min-width: 22px;
+      }
+    }
+    &.delete {
+      background: rgba(210, 98, 98, 0.07)
+        url("../../public/images/cautionred.svg") 20px 17px/20px no-repeat;
+      border: 1px solid #d26262;
+      color: #d26262;
+      padding: 20px 50px;
+    }
+    .defintionShow {
+      width: 100%;
+    }
+    h4 {
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      font-family: $axiforma-regular;
+      color: $black;
+      font-size: 14px;
+      letter-spacing: -0.15px;
+      line-height: 1.5;
+    }
+    .content {
+      color: #656565;
+      font-size: 13px;
+      letter-spacing: -0.15px;
+      line-height: 1.6;
+      ul,
+      ol {
+        margin: 0 0 0 12px !important;
+        padding: 0 !important;
+      }
+
+      ol {
+        list-style-type: decimal;
+      }
+      ul {
+        list-style-type: disc;
+      }
+    }
+    .actionBar {
+      opacity: 0;
+      transition: 0.4s;
+      position: absolute;
+      right: 20px;
+      top: 8px;
+      display: flex;
+      gap: 5px;
+      & > button {
+        background: $bluelight;
+        border-radius: 5px;
+        padding: 8px 10px;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-self: center;
+        img {
+          width: 15px;
+          height: 15px;
+          object-fit: contain;
+        }
+      }
+    }
+    &:hover {
+      .actionBar {
+        opacity: 1;
+      }
+    }
+    .defintionShowAdd {
+      padding: 0;
+      border: 0;
+      margin-bottom: 0;
+    }
+    .addButton {
+      bottom: 0;
+      right: 0;
+    }
+  }
+  .addButton {
+    position: absolute;
+    bottom: 16px;
+    right: 20px;
+    padding: 8px 22px;
+    z-index: 6;
+    font-size: 14px;
+  }
+  .defintionShowAdd {
+    border-color: #ccbebe;
+    position: relative;
+    gap: 10px;
+    border-radius: 10px;
+    border: 1px solid #008282;
+    background: $white;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    input {
+      padding: 0 0 6px;
+      font-size: 14px;
+      color: #5e6166;
+      font-family: $axiforma-regular;
+    }
+  }
+  .textareaWrapper {
+    * {
+      font-size: 14px !important;
+    }
+    padding: 12px 0 0;
+  }
+}

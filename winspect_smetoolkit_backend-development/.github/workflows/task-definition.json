@@ -1,0 +1,150 @@
+{
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:699630347910:task-definition/WINSPECT-SMETK-BACKEND-PREPROD-TASK-DEFINITION:3",
+  "containerDefinitions": [
+    {
+      "name": "winspect-sm-backend-preprod",
+      "image": "699630347910.dkr.ecr.us-east-1.amazonaws.com/winspect-backend-smetoolkit-preprod",
+      "cpu": 0,
+      "portMappings": [
+        {
+          "name": "winspect-sm-backend-preprod-3001-tcp",
+          "containerPort": 3001,
+          "hostPort": 3001,
+          "protocol": "tcp",
+          "appProtocol": "http"
+        }
+      ],
+      "essential": true,
+      "environment": [
+        {
+          "name": "JWT_SECRET_ACCESS_TOKEN",
+          "value": "tokenSigningSecretKeyPreProdSME"
+        },
+        {
+          "name": "DATABASE_USER_NAME",
+          "value": "winspectpreprod"
+        },
+        {
+          "name": "DATABASE_NAME",
+          "value": "winspectdb"
+        },
+        {
+          "name": "JWT_EXPIRES_REFRESH_TOKEN",
+          "value": "30d"
+        },
+        {
+          "name": "SECRET_ACCESS_KEY",
+          "value": "REPLACE_WITH_YOUR_AWS_SECRET_ACCESS_KEY"
+        },
+        {
+          "name": "JWT_SECRET_REFRESH_TOKEN",
+          "value": "refreshTokenSecretKeyPreProdSME"
+        },
+        {
+          "name": "DATABASE_HOST",
+          "value": "winspect-preprod-reportwriter.cbv0vzcf3gfn.us-east-1.rds.amazonaws.com"
+        },
+        {
+          "name": "JWT_EXPIRES_ACCESS_TOKEN",
+          "value": "7d"
+        },
+        {
+          "name": "ACCESS_KEY_ID",
+          "value": "REPLACE_WITH_YOUR_AWS_ACCESS_KEY_ID"
+        },
+        {
+          "name": "WINCONNECT_API_TOKEN",
+          "value": "R090ZWFtOlcxbiR0cjBuZ1BANTUhU2VjdXJl"
+        },
+        {
+          "name": "DATABASE_PASSWORD",
+          "value": "winspect@2023"
+        },
+        {
+          "name": "ALLOWED_ORIGINS",
+          "value": "http://preprod.smetoolkit.winspectdev.com,https://preprod.interactivereport.winspectdev.com,https://desktop-preprod.winspectdev.com"
+        }
+      ],
+      "environmentFiles": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "ulimits": [],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/WINSPECT-SMETK-BACKEND-PREPROD-TASK-DEFINITION",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        },
+        "secretOptions": []
+      },
+      "healthCheck": {
+        "command": [
+          "CMD-SHELL",
+          "curl --head -f 'http://localhost:3001' || exit 1"
+        ],
+        "interval": 5,
+        "timeout": 10,
+        "retries": 5,
+        "startPeriod": 180
+      }
+    }
+  ],
+  "family": "WINSPECT-SMETK-BACKEND-PREPROD-TASK-DEFINITION",
+  "taskRoleArn": "arn:aws:iam::699630347910:role/ecsTaskExecutionRole",
+  "executionRoleArn": "arn:aws:iam::699630347910:role/ecsTaskExecutionRole",
+  "networkMode": "awsvpc",
+  "revision": 3,
+  "volumes": [],
+  "status": "ACTIVE",
+  "requiresAttributes": [
+    {
+      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+    },
+    {
+      "name": "ecs.capability.execution-role-awslogs"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.task-iam-role"
+    },
+    {
+      "name": "ecs.capability.container-health-check"
+    },
+    {
+      "name": "ecs.capability.execution-role-ecr-pull"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+    },
+    {
+      "name": "ecs.capability.task-eni"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+    }
+  ],
+  "placementConstraints": [],
+  "compatibilities": [
+    "EC2",
+    "FARGATE"
+  ],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "2048",
+  "memory": "4096",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "registeredAt": "2023-08-21T09:32:30.301Z",
+  "registeredBy": "arn:aws:iam::699630347910:user/igill",
+  "tags": []
+}
